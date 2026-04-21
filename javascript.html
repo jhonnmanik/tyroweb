@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi JavaScript - TYRO WEB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">TYRO WEB</a>
+            <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="html.html">HTML</a></li>
+                <li><a href="css.html">CSS</a></li>
+                <li><a href="javascript.html">JavaScript</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-content">
+        <section class="content-box">
+            <h2 class="section-title">JavaScript</h2>
+            <p class="section-desc">JavaScript membuat website menjadi interaktif. Anda dapat menangani event klik, mengubah elemen HTML, dan melakukan perhitungan.</p>
+
+            <h3>Interaksi DOM (Document Object Model)</h3>
+            <p>Cobalah klik tombol di bawah ini untuk melihat aksi JavaScript mengubah warna elemen atau menampilkan pesan.</p>
+
+            <div class="code-showcase">
+                <div class="code-block">
+<pre><code>// Mengubah warna kotak
+function ubahWarna() {
+  const kotak = document.getElementById('kotak');
+  kotak.style.backgroundColor = '#3B82F6';
+}
+
+// Menampilkan pesan
+function tampilkanPesan() {
+  tampilkanModal('Halo! Ini aksi dari JS.');
+}</code></pre>
+                </div>
+                <div class="output-block">
+                    <div id="kotak" class="contoh-js-box"></div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" onclick="ubahWarnaContoh()">Ubah Warna</button>
+                        <button class="btn" style="background-color: #1F2937;" onclick="tampilkanModal('Halo! JavaScript bekerja dengan baik!')">Tampilkan Pesan</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 1rem;">Pesan Sistem</h3>
+            <p id="modalMessage" style="margin-bottom: 1.5rem;">Pesan di sini</p>
+            <button class="btn" onclick="tutupModal()">Tutup</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Kelompok 7</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>

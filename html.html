@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi HTML - TYRO WEB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">TYRO WEB</a>
+            <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="html.html">HTML</a></li>
+                <li><a href="css.html">CSS</a></li>
+                <li><a href="javascript.html">JavaScript</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-content">
+        <section class="content-box">
+            <h2 class="section-title">HTML (HyperText Markup Language)</h2>
+            <p class="section-desc">HTML adalah kerangka dasar dari setiap halaman web. HTML menggunakan tag untuk mendefinisikan elemen seperti teks, gambar, dan tautan.</p>
+
+            <h3>Contoh Penggunaan Tag Dasar</h3>
+            <p>Di bawah ini adalah contoh penggunaan tag heading (<code>&lt;h1&gt;</code>), paragraf (<code>&lt;p&gt;</code>), dan gambar (<code>&lt;img&gt;</code>).</p>
+
+            <div class="code-showcase">
+                <div class="code-block">
+<pre><code><h1>Halo, Programmer!</h1>
+
+&lt;p&gt;Ini adalah contoh paragraf di HTML.
+Web sangat menyenangkan.&lt;/p&gt;
+
+&lt;img src="https://via.placeholder.com/150"
+     alt="Gambar Contoh"&gt;</code></pre>
+                </div>
+                <div class="output-block">
+                    <h1 style="margin-bottom: 10px;">Halo, Programmer!</h1>
+                    <p style="margin-bottom: 10px; text-align: center;">Ini adalah contoh paragraf di HTML. Web sangat menyenangkan.</p>
+                    <img src="https://via.placeholder.com/150/4F46E5/FFFFFF?text=Contoh+Gambar" alt="Gambar Contoh" style="border-radius: 8px;">
+                </div>
+            </div>
+        </section>
+        <section class="content-box">
+            <h3>Membuat Tautan (Link)</h3>
+            <p>Tag <code>&lt;a&gt;</code> (anchor) digunakan untuk membuat tautan yang bisa diklik untuk berpindah ke halaman lain. Atribut <code>href</code> digunakan untuk menentukan alamat tujuan.</p>
+
+            <div class="code-showcase">
+                <div class="code-block">
+<pre><code><p>Belajar coding di </p>
+&lt;a href="https://www.w3schools.com" target="_blank"&gt;
+W3Schools&lt;/a&gt;.&lt;/p&gt;</code></pre>
+                </div>
+                <div class="output-block">
+                    <p style="text-align: center;">Belajar coding di <a href="#" style="color: var(--primary); font-weight: 600; text-decoration: none;">W3Schools</a>.</p>
+                </div>
+            </div>
+        </section>
+
+       <section class="content-box">
+            <h3>Membuat Daftar (List)</h3>
+            <p>Di HTML, ada dua jenis daftar utama: <b>Unordered List</b> (<code>&lt;ul&gt;</code>) untuk daftar menggunakan titik/bullet, dan <b>Ordered List</b> (<code>&lt;ol&gt;</code>) untuk daftar berurutan menggunakan angka. Isi daftarnya menggunakan tag <code>&lt;li&gt;</code>.</p>
+
+            <div class="code-showcase">
+                <textarea class="code-block" readonly rows="12" style="width: 100%; resize: none; border: none; outline: none; line-height: 1.5;">
+<h4>Daftar Bahasa Web:</h4>
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+
+<h4>Langkah Belajar:</h4>
+<ol>
+    <li>Pahami Tag</li>
+    <li>Buat Struktur</li>
+</ol>
+                </textarea>
+                
+                <div class="output-block" style="align-items: flex-start; padding-left: 2.5rem;">
+                    <h4 style="margin-bottom: 0.5rem;">Daftar Bahasa Web:</h4>
+                    <ul style="margin-bottom: 1.5rem; margin-left: 1.5rem;">
+                        <li>HTML</li>
+                        <li>CSS</li>
+                    </ul>
+
+                    <h4 style="margin-bottom: 0.5rem;">Langkah Belajar:</h4>
+                    <ol style="margin-left: 1.5rem;">
+                        <li>Pahami Tag</li>
+                        <li>Buat Struktur</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-box">
+            <h3>Membuat Tabel Data</h3>
+            <p>Tabel sangat berguna untuk menampilkan data yang terstruktur. Kita menggunakan tag table sebagai pembungkus utama, tr untuk baris, th untuk judul kolom, dan td untuk isi data.</p>
+
+            <div class="code-showcase">
+                <textarea class="code-block" readonly rows="11" style="width: 100%; resize: none; border: none; outline: none; line-height: 1.5;">
+<table border="1">
+  <tr>
+    <th>Nama</th>
+    <th>Peran</th>
+  </tr>
+  <tr>
+    <td>Jhon</td>
+    <td>Koordinator</td>
+  </tr>
+  <tr>
+    <td>Ade</td>
+    <td>UI/Frontend</td>
+  </tr>
+  <tr>
+    <td>Andri</td>
+    <td>Frontend</td>
+  </tr>
+  <tr>
+    <td>Maulana</td>
+    <td>Materi & JavaScript</td>
+  </tr>
+</table>
+                </textarea>
+                
+                <table border="1">
+  <tr>
+    <th>Nama</th>
+    <th>Peran</th>
+  </tr>
+  <tr>
+    <td>Jhon</td>
+    <td>Koordinator</td>
+  </tr>
+  <tr>
+    <td>Ade</td>
+    <td>UI/Frontend</td>
+  </tr>
+  <tr>
+    <td>Andri</td>
+    <td>Frontend</td>
+  </tr>
+  <tr>
+    <td>Maulana</td>
+    <td>Materi & JavaScript</td>
+  </tr>
+</table>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h3>Membuat Formulir (Form)</h3>
+            <p>Formulir digunakan untuk menerima input dari pengguna, seperti halaman login atau pendaftaran. Tag utamanya adalah form, yang di dalamnya terdapat berbagai jenis input dan button.</p>
+
+            <div class="code-showcase">
+                <textarea class="code-block" readonly rows="7" style="width: 100%; resize: none; border: none; outline: none; line-height: 1.5;">
+<form>
+  <label>Username:</label><br>
+  <input type="text" placeholder="Ketik nama...">
+  <br><br>
+  <button type="button">Kirim</button>
+</form>
+                </textarea>
+                
+                <div class="output-block" style="align-items: flex-start;">
+                    <form style="width: 100%; max-width: 250px; background: white; padding: 15px; border-radius: 8px; border: 1px solid #E5E7EB;">
+                        <label style="font-weight: 600; font-size: 14px;">Username:</label><br>
+                        <input type="text" placeholder="Ketik nama..." style="width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #D1D5DB; border-radius: 4px; outline: none;">
+                        <button type="button" class="btn" style="width: 100%; margin-top: 0; padding: 8px;">Kirim</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="content-box">
+            <h3>Format Teks (Text Formatting)</h3>
+            <p>HTML menyediakan tag khusus untuk mengatur gaya teks tanpa perlu CSS tambahan. Beberapa yang paling umum adalah <code>&lt;b&gt;</code> untuk tebal, <code>&lt;i&gt;</code> untuk miring, dan <code>&lt;u&gt;</code> untuk garis bawah.</p>
+
+            <div class="code-showcase">
+                <textarea class="code-block" readonly rows="5" style="width: 100%; resize: none; border: none; outline: none; line-height: 1.5;">
+<p>Ini adalah teks <b>tebal</b> (bold).</p>
+<p>Ini adalah teks <i>miring</i> (italic).</p>
+<p>Ini adalah teks <u>bergaris bawah</u> (underline).</p>
+                </textarea>
+                
+                <div class="output-block" style="align-items: flex-start; gap: 10px;">
+                    <p style="margin: 0;">Ini adalah teks <b>tebal</b> (bold).</p>
+                    <p style="margin: 0;">Ini adalah teks <i>miring</i> (italic).</p>
+                    <p style="margin: 0;">Ini adalah teks <u>bergaris bawah</u> (underline).</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h3>Atribut HTML (id, class, style)</h3>
+            <p>Atribut memberikan informasi tambahan atau "kekuatan khusus" pada tag HTML. <code>style</code> untuk mewarnai/mendesain langsung, sedangkan <code>id</code> dan <code>class</code> ibarat "nama panggilan" yang nantinya wajib dipakai saat kita belajar CSS dan JavaScript.</p>
+
+            <div class="code-showcase">
+                <textarea class="code-block" readonly rows="5" style="width: 100%; resize: none; border: none; outline: none; line-height: 1.5;">
+<p style="color: blue;">Teks ini biru karena atribut style.</p>
+
+<p class="teks-penting">Teks ini punya nama panggilan (class).</p>
+
+<p id="paragraf-utama">Teks ini punya ID unik.</p>
+                </textarea>
+                
+                <div class="output-block" style="align-items: flex-start; gap: 10px;">
+                    <p style="color: blue; margin: 0;">Teks ini biru karena atribut style.</p>
+                    <p style="margin: 0;">Teks ini punya nama panggilan (class).</p>
+                    <p style="margin: 0;">Teks ini punya ID unik.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h3>Pembungkus Elemen (Div dan Span)</h3>
+            <p>Tag <code>&lt;div&gt;</code> dan <code>&lt;span&gt;</code> ibarat "kardus kosong" untuk merapikan elemen lain. Bedanya: <b>div</b> memakan satu baris penuh ke bawah (block), sedangkan <b>span</b> hanya membungkus teks seperlunya ke samping (inline).</p>
+
+            <div class="code-showcase">
+                <textarea class="code-block" readonly rows="6" style="width: 100%; resize: none; border: none; outline: none; line-height: 1.5;">
+<div style="background-color: #FEE2E2; padding: 10px;">
+  <p>Ini paragraf di dalam sebuah kotak Div.</p>
+  <p>Kata <span style="color: red; font-weight: bold;">INI</span> dibungkus oleh Span.</p>
+</div>
+                </textarea>
+                
+                <div class="output-block" style="align-items: flex-start; width: 100%;">
+                    <div style="background-color: #FEE2E2; padding: 10px; width: 100%; border-radius: 4px;">
+                        <p style="margin-bottom: 5px;">Ini paragraf di dalam sebuah kotak Div.</p>
+                        <p style="margin: 0;">Kata <span style="color: red; font-weight: bold;">INI</span> dibungkus oleh Span.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h3>Menambahkan Audio & Video</h3>
+            <p>Untuk membuat web lebih hidup, kamu bisa memasukkan suara dengan <code>&lt;audio&gt;</code> atau film dengan <code>&lt;video&gt;</code>. Ingat, selalu tambahkan atribut <b>controls</b> agar muncul tombol play, pause, dan volume.</p>
+
+            <div class="code-showcase">
+                <textarea class="code-block" readonly rows="5" style="width: 100%; resize: none; border: none; outline: none; line-height: 1.5;">
+<audio controls>
+  <source src="musikku.mp3" type="audio/mpeg">
+  Browser kamu tidak mendukung audio.
+</audio>
+                </textarea>
+                
+                <div class="output-block">
+                    <audio controls style="width: 100%; max-width: 300px;">
+                        <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-box">
+            <h3>Elemen Semantik (Semantic HTML)</h3>
+            <p>Website modern tidak hanya menggunakan tag <code>&lt;div&gt;</code> secara terus-menerus. Agar mudah dibaca oleh Google, kita menggunakan tag yang memiliki "makna" pasti, seperti <code>&lt;header&gt;</code> untuk bagian atas, <code>&lt;main&gt;</code> untuk isi utama, dan <code>&lt;footer&gt;</code> untuk bagian bawah web.</p>
+
+            <div class="code-showcase">
+                <textarea class="code-block" readonly rows="8" style="width: 100%; resize: none; border: none; outline: none; line-height: 1.5;">
+<header>
+  <h1>Judul Web</h1>
+</header>
+
+<main>
+  <p>Isi utama artikel ada di sini.</p>
+</main>
+
+<footer>Copyright 2026</footer>
+                </textarea>
+                
+                <div class="output-block" style="width: 100%;">
+                    <div style="border: 2px dashed #090909; padding: 10px; text-align: center; border-radius: 4px; width: 100%;">
+                        <header style="background: #E5E7EB; padding: 10px; margin-bottom: 10px; border-radius: 4px;"><b>Header</b> (Bagian Kepala)</header>
+                        <main style="background: #D1FAE5; padding: 20px; margin-bottom: 10px; border-radius: 4px;"><b>Main</b> (Isi Utama Web)</main>
+                        <footer style="background: #E5E7EB; padding: 10px; border-radius: 4px;"><b>Footer</b> (Bagian Kaki)</footer>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Kelompok 7</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playground - TYRO WEB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">TYRO WEB</a>
+            <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="html.html">HTML</a></li>
+                <li><a href="css.html">CSS</a></li>
+                <li><a href="javascript.html">JavaScript</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-content">
+        <section class="playground-container">
+            <h2 class="section-title">Code Playground</h2>
+            <p class="section-desc">Coba ketik dan edit sendiri kode HTML, CSS, dan JavaScript di bawah ini. Hasilnya akan langsung muncul secara real-time.</p>
+
+            <div class="editor-panels">
+                <div class="panel html-panel">
+                    <label>HTML</label>
+                    <textarea id="html-editor" spellcheck="false">
+<h2>Halo Coder!</h2>
+<button id="btnAksi">Ubah Judul</button>
+                    </textarea>
+                </div>
+
+                <div class="panel css-panel">
+                    <label>CSS</label>
+                    <textarea id="css-editor" spellcheck="false">
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding-top: 20px;
+}
+
+button {
+  background: #4F46E5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #4338CA;
+}
+                    </textarea>
+                </div>
+
+                <div class="panel js-panel">
+                    <label>JavaScript</label>
+                    <textarea id="js-editor" spellcheck="false">
+const tombol = document.getElementById('btnAksi');
+const judul = document.querySelector('h2');
+
+tombol.addEventListener('click', function() {
+    judul.style.color = '#E34F26';
+    judul.textContent = 'Mantap!';
+    this.textContent = 'Sudah Berubah';
+});
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="output-panel">
+                <label>Hasil (Output Live)</label>
+                <iframe id="live-output" title="Live Output"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Kelompok 7</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi CSS - TYRO WEB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">TYRO WEB</a>
+            <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="html.html">HTML</a></li>
+                <li><a href="css.html">CSS</a></li>
+                <li><a href="javascript.html">JavaScript</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-content">
+        <section class="content-box">
+            <h2 class="section-title">CSS (Cascading Style Sheets)</h2>
+            <p class="section-desc">CSS digunakan untuk mendesain dan mempercantik halaman web. Anda bisa mengatur warna, ukuran, tata letak, hingga animasi.</p>
+
+            <h3>Membuat Tombol Menarik</h3>
+            <p>Berikut adalah cara kita memberikan gaya pada elemen HTML agar terlihat lebih modern.</p>
+
+            <div class="code-showcase">
+                <div class="code-block">
+<pre><code>.btn-keren {
+    background-color: #10B981;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+}</code></pre>
+                </div>
+                <div class="output-block">
+                    <button class="contoh-css-btn">Tombol Keren</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Kelompok 7</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>

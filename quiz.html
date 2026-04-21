@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - TYRO WEB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">TYRO WEB</a>
+            <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="html.html">HTML</a></li>
+                <li><a href="css.html">CSS</a></li>
+                <li><a href="javascript.html">JavaScript</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-content">
+        <section class="content-box">
+            <h2 class="section-title">Uji Pengetahuanmu</h2>
+            <p class="section-desc">Kerjakan quiz sederhana ini untuk menguji pemahamanmu tentang dasar pemrograman web.</p>
+
+            <form id="quizForm" class="quiz-form">
+                <div class="question">
+                    <h4>1. Apa kepanjangan dari HTML?</h4>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a"> HyperText Markup Language</label>
+                        <label><input type="radio" name="q1" value="b"> HighText Machine Language</label>
+                        <label><input type="radio" name="q1" value="c"> HyperLoop Machine Level</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>2. Properti CSS apa yang digunakan untuk mengubah warna latar belakang?</h4>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="a"> color</label>
+                        <label><input type="radio" name="q2" value="b"> background-color</label>
+                        <label><input type="radio" name="q2" value="c"> bgcolor</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>3. Bagaimana cara mendeklarasikan variabel di JavaScript modern?</h4>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="a"> variable x = 10;</label>
+                        <label><input type="radio" name="q3" value="b"> int x = 10;</label>
+                        <label><input type="radio" name="q3" value="c"> let x = 10;</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%;">Cek Skor</button>
+            </form>
+
+            <div id="quiz-result"></div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 1rem;">Pesan Sistem</h3>
+            <p id="modalMessage" style="margin-bottom: 1.5rem;">Pesan di sini</p>
+            <button class="btn" onclick="tutupModal()">Tutup</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Kelompok 7</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>
