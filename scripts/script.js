@@ -1,244 +1,192 @@
+// 1. Mobile Menu Toggle
 const navToggle = document.querySelector('.nav-toggle');
-const navLinks  = document.querySelector('.nav-links');
+const navLinks = document.querySelector('.nav-links');
 
 if (navToggle && navLinks) {
-
-    navToggle.addEventListener('click', function () {
-        const sedangTerbuka = navLinks.classList.contains('terbuka');
-
-        if (sedangTerbuka) {
-            tutupMenu();
-        } else {
-            bukaMenu();
-        }
-    });
-
-    navLinks.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-            tutupMenu();
-        });
-    });
-
-    document.addEventListener('click', function (event) {
-        const nav = document.querySelector('nav');
-        if (nav && !nav.contains(event.target)) {
-            tutupMenu();
-        }
-    });
-
-    window.addEventListener('resize', function () {
-        if (window.innerWidth > 768) {
-            tutupMenu();
-        }
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        navToggle.classList.toggle('active');
     });
 }
 
-
-function bukaMenu() {
-    navLinks.classList.add('terbuka');
-    navToggle.setAttribute('aria-expanded', 'true');
-}
-
-function tutupMenu() {
-    navLinks.classList.remove('terbuka');
-    navToggle.setAttribute('aria-expanded', 'false');
-    // document.body.style.overflow = '';
-}
-
-
-const htmlEditor  = document.getElementById('html-editor');
-const cssEditor   = document.getElementById('css-editor');
-const jsEditor    = document.getElementById('js-editor');
-const liveOutput  = document.getElementById('live-output');
-
-if (htmlEditor && cssEditor && jsEditor && liveOutput) {
-
-    function perbaruiOutput() {
-        const htmlKode = htmlEditor.value;
-        const cssKode  = cssEditor.value;
-        const jsKode   = jsEditor.value;
-
-        const dokumenLengkap = `<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>${cssKode}</style>
-</head>
-<body>
-    ${htmlKode}
-    <script>
-        // Bungkus dalam try-catch agar error JS tidak merusak iframe
-        try {
-            ${jsKode}
-        } catch (err) {
-            document.body.innerHTML += '<p style="color:red;font-family:monospace;padding:10px;background:#fee;border-radius:6px;">⚠️ Error JS: ' + err.message + '</p>';
-        }
-    <\/script>
-</body>
-</html>`;
-
-        liveOutput.srcdoc = dokumenLengkap;
+// 2. Active Link Highlighter
+const currentLocation = location.href;
+const menuItem = document.querySelectorAll('.nav-links a');
+for (let i = 0; i < menuItem.length; i++) {
+    if (menuItem[i].href === currentLocation) {
+        menuItem[i].className = "active";
     }
-
-    htmlEditor.addEventListener('input', perbaruiOutput);
-    cssEditor.addEventListener('input',  perbaruiOutput);
-    jsEditor.addEventListener('input',   perbaruiOutput);
-
-    perbaruiOutput();
-
-    [htmlEditor, cssEditor, jsEditor].forEach(function (editor) {
-        editor.addEventListener('keydown', function (event) {
-            if (event.key === 'Tab') {
-                event.preventDefault();
-                const start  = this.selectionStart;
-                const end    = this.selectionEnd;
-                this.value   = this.value.substring(0, start) + '  ' + this.value.substring(end);
-                this.selectionStart = this.selectionEnd = start + 2;
-            }
-        });
-    });
 }
 
+// 3. Modal System
+const modal = document.getElementById('customModal');
+const modalMessage = document.getElementById('modalMessage');
 
-const quizForm   = document.getElementById('quizForm');
-const quizResult = document.getElementById('quiz-result');
-
-if (quizForm && quizResult) {
-
-    // Kunci jawaban yang benar untuk setiap soal
-    // Format: { nama_soal: 'nilai_jawaban_benar' }
-    const kunciJawaban = {
-        q1: 'a', // HyperText Markup Language
-        q2: 'b', // background-color
-        q3: 'c', // let x = 10;
-    };
-
-    // Saat form di-submit (tombol "Cek Skor" diklik)
-    quizForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Cegah halaman reload
-
-        let skorBenar = 0;
-        const totalSoal = Object.keys(kunciJawaban).length;
-        let adaYangBelumDijawab = false;
-
-        // Periksa setiap jawaban
-        for (const soal in kunciJawaban) {
-            const jawabanDipilih = quizForm.querySelector(`input[name="${soal}"]:checked`);
-
-            if (!jawabanDipilih) {
-                // Pengguna belum memilih jawaban untuk soal ini
-                adaYangBelumDijawab = true;
-                break;
-            }
-
-            if (jawabanDipilih.value === kunciJawaban[soal]) {
-                skorBenar++; // Tambah skor jika benar
-            }
-        }
-
-        // Jika ada soal yang belum dijawab, tampilkan peringatan
-        if (adaYangBelumDijawab) {
-            quizResult.innerHTML = '⚠️ Jawab semua pertanyaan terlebih dahulu ya!';
-            quizResult.style.borderColor = '#F59E0B';
-            quizResult.style.background  = '#FFFBEB';
-            quizResult.style.color       = '#92400E';
-            return;
-        }
-
-        // Hitung persentase skor
-        const persentase = Math.round((skorBenar / totalSoal) * 100);
-
-        // Tentukan pesan berdasarkan skor
-        let emoji, pesan;
-        if (persentase === 100) {
-            emoji = '🎉';
-            pesan = 'Sempurna! Kamu luar biasa!';
-        } else if (persentase >= 67) {
-            emoji = '👏';
-            pesan = 'Bagus! Terus belajar ya!';
-        } else if (persentase >= 34) {
-            emoji = '💪';
-            pesan = 'Lumayan! Ulangi materinya dan coba lagi.';
-        } else {
-            emoji = '📖';
-            pesan = 'Yuk baca materinya lagi dari awal!';
-        }
-
-        // Tampilkan hasil
-        quizResult.innerHTML = `
-            <div style="font-size:2rem;margin-bottom:0.5rem;">${emoji}</div>
-            <div style="font-size:1.5rem;font-weight:800;color:#0F172A;margin-bottom:0.25rem;">
-                ${skorBenar} / ${totalSoal} Benar
-            </div>
-            <div style="font-size:0.9rem;color:#6B7280;">${pesan}</div>
-        `;
-
-        // Scroll halaman ke area hasil agar pengguna bisa melihatnya
-        quizResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-}
-
-
-/**
- * Menampilkan modal dengan pesan tertentu
- * @param {string} pesan - Teks yang akan ditampilkan di dalam modal
- */
 function tampilkanModal(pesan) {
-    const modal   = document.getElementById('customModal');
-    const isiPesan = document.getElementById('modalMessage');
+    if(modal && modalMessage) {
+        modalMessage.innerHTML = pesan;
+        modal.classList.add('active');
+    } else {
+        alert(pesan);
+    }
+}
 
-    if (modal && isiPesan) {
-        isiPesan.textContent = pesan;
-        modal.classList.add('aktif');
+function tutupModal() {
+    if(modal) modal.classList.remove('active');
+}
 
-        modal.addEventListener('click', function tutupJikaKlikLuar(event) {
-            if (event.target === modal) {
-                tutupModal();
-                modal.removeEventListener('click', tutupJikaKlikLuar);
+// 4. Playground Live Output Logic
+const htmlEditor = document.getElementById('html-editor');
+const cssEditor = document.getElementById('css-editor');
+const jsEditor = document.getElementById('js-editor');
+const liveOutput = document.getElementById('live-output');
+
+function updatePlayground() {
+    if(!liveOutput) return;
+    const htmlCode = htmlEditor.value;
+    const cssCode = "<style>" + cssEditor.value + "</style>";
+    const jsCode = "<script>" + jsEditor.value + "<\/script>";
+    
+    liveOutput.srcdoc = htmlCode + cssCode + jsCode;
+}
+
+if (htmlEditor && cssEditor && jsEditor) {
+    htmlEditor.addEventListener('keyup', updatePlayground);
+    cssEditor.addEventListener('keyup', updatePlayground);
+    jsEditor.addEventListener('keyup', updatePlayground);
+    
+    // Bind to templates onchange if applicable
+    const selector = document.getElementById('templateSelector');
+    if (selector) {
+        selector.addEventListener('change', updatePlayground);
+    }
+    
+    updatePlayground(); 
+}
+
+// 5. Quiz Logic (20 Questions - Step by Step)
+const quizForm = document.getElementById('quizForm');
+if (quizForm) {
+    const questions = document.querySelectorAll('.question');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressBar = document.getElementById('quizProgressBar');
+    const progressText = document.getElementById('quizProgressText');
+    const percentText = document.getElementById('quizPercentText');
+    
+    let currentQuestionIndex = 0;
+    const totalQuestions = questions.length;
+    
+    function tampilkanSoal(index) {
+        // Tampilkan soal aktif, sembunyikan sisanya
+        questions.forEach((q, idx) => {
+            if (idx === index) {
+                q.classList.add('active-question');
+            } else {
+                q.classList.remove('active-question');
             }
         });
+        
+        // Update navigasi tombol
+        prevBtn.style.display = index === 0 ? 'none' : 'block';
+        
+        if (index === totalQuestions - 1) {
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'block';
+        } else {
+            nextBtn.style.display = 'block';
+            submitBtn.style.display = 'none';
+        }
+        
+        // Cek apakah soal aktif sudah dijawab
+        updateNextButtonState(index);
+        
+        // Update bar kemajuan kuis
+        const percent = Math.round(((index + 1) / totalQuestions) * 100);
+        progressBar.style.width = percent + '%';
+        progressText.textContent = `Soal ${index + 1} dari ${totalQuestions}`;
+        percentText.textContent = `${percent}% Selesai`;
     }
-}
-
-/* Menutup modal yang sedang terbuka */
-function tutupModal() {
-    const modal = document.getElementById('customModal');
-    if (modal) {
-        modal.classList.remove('aktif');
+    
+    function updateNextButtonState(index) {
+        const checkedOption = questions[index].querySelector('input[type="radio"]:checked');
+        if (index === totalQuestions - 1) {
+            submitBtn.disabled = !checkedOption;
+        } else {
+            nextBtn.disabled = !checkedOption;
+        }
     }
-}
-
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-        tutupModal();
+    
+    function navigasiSoal(arah) {
+        const targetIndex = currentQuestionIndex + arah;
+        if (targetIndex >= 0 && targetIndex < totalQuestions) {
+            currentQuestionIndex = targetIndex;
+            tampilkanSoal(currentQuestionIndex);
+        }
     }
-});
-
-
-
-// Daftar warna yang akan bergantian saat tombol diklik
-const daftarWarna = [
-    '#6366F1', // Indigo
-    '#3B82F6', // Biru
-    '#10B981', // Hijau Emerald
-    '#F59E0B', // Amber
-    '#EF4444', // Merah
-    '#8B5CF6', // Ungu
-    '#EC4899', // Pink
-];
-
-let indeksWarnaSaatIni = 0;
-
-function ubahWarnaContoh() {
-    const kotak = document.getElementById('kotak');
-    if (!kotak) return;
-
-    // Pindah ke warna berikutnya
-    indeksWarnaSaatIni = (indeksWarnaSaatIni + 1) % daftarWarna.length;
-    const warnaBaru = daftarWarna[indeksWarnaSaatIni];
-
-    // Terapkan warna baru ke kotak
-    kotak.style.background = warnaBaru;
-    kotak.style.boxShadow  = `0 8px 24px ${warnaBaru}60`;
+    
+    // Bind aksi klik tombol navigasi
+    prevBtn.addEventListener('click', () => navigasiSoal(-1));
+    nextBtn.addEventListener('click', () => navigasiSoal(1));
+    
+    // Event listener untuk pilihan jawaban (Manual next oleh pengguna)
+    questions.forEach((questionDiv, index) => {
+        const radios = questionDiv.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                // Aktifkan tombol navigasi setelah pengguna memilih
+                updateNextButtonState(index);
+            });
+        });
+    });
+    
+    // Inisialisasi tampilan soal pertama
+    tampilkanSoal(currentQuestionIndex);
+    
+    // Submit Form (Kalkulasi Nilai Akhir)
+    quizForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let score = 0;
+        
+        // Kunci Jawaban Kuis 20 Soal
+        const answers = { 
+            q1: 'a', q2: 'b', q3: 'a', q4: 'b', q5: 'b',
+            q6: 'b', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+            q11: 'b', q12: 'a', q13: 'b', q14: 'a', q15: 'c',
+            q16: 'b', q17: 'a', q18: 'a', q19: 'b', q20: 'b'
+        };
+        
+        let unanswered = [];
+        
+        for (let key in answers) {
+            const selected = quizForm.elements[key];
+            if (selected) {
+                let checkedVal = "";
+                if (selected instanceof NodeList || selected.length > 0) {
+                    for (let i = 0; i < selected.length; i++) {
+                        if (selected[i].checked) {
+                            checkedVal = selected[i].value;
+                            break;
+                        }
+                    }
+                } else if (selected.checked) {
+                    checkedVal = selected.value;
+                }
+                
+                if (checkedVal === "") {
+                    unanswered.push(key.replace('q', ''));
+                } else if (checkedVal === answers[key]) {
+                    score++;
+                }
+            }
+        }
+        
+        if (unanswered.length > 0) {
+            tampilkanModal(`Pemberitahuan: Anda belum menjawab soal nomor: ${unanswered.join(', ')}. Silakan lengkapi terlebih dahulu!`);
+        } else {
+            const percentage = Math.round((score / totalQuestions) * 100);
+            tampilkanModal(`Kuis Selesai!<br><br>Skor Anda: <b>${score} / ${totalQuestions}</b> (${percentage}%)<br><br>Terus tingkatkan pemahaman belajar Anda dalam pemrograman dasar web!`);
+        }
+    });
 }

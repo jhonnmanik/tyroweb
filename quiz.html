@@ -1,86 +1,336 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz - TYRO WEB</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - TYRO WEB</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <style>
+    /* Styling untuk Kuis Satu per Satu */
+    .question {
+      display: none;
+    }
+
+    .question.active-question {
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .quiz-progress-container {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    #quizProgressBar {
+      width: 5%;
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .quiz-navigation {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .quiz-navigation button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
+
 <body>
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="logo">TYRO WEB</a>
-            <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navLinks">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="html.html">HTML</a></li>
-                <li><a href="css.html">CSS</a></li>
-                <li><a href="javascript.html">JavaScript</a></li>
-                <li><a href="playground.html">Playground</a></li>
-                <li><a href="quiz.html">Quiz</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <main class="container page-content">
-        <section class="content-box">
-            <h2 class="section-title">Uji Pengetahuanmu</h2>
-            <p class="section-desc">Kerjakan quiz sederhana ini untuk menguji pemahamanmu tentang dasar pemrograman web.</p>
-
-            <form id="quizForm" class="quiz-form">
-                <div class="question">
-                    <h4>1. Apa kepanjangan dari HTML?</h4>
-                    <div class="options">
-                        <label><input type="radio" name="q1" value="a"> HyperText Markup Language</label>
-                        <label><input type="radio" name="q1" value="b"> HighText Machine Language</label>
-                        <label><input type="radio" name="q1" value="c"> HyperLoop Machine Level</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <h4>2. Properti CSS apa yang digunakan untuk mengubah warna latar belakang?</h4>
-                    <div class="options">
-                        <label><input type="radio" name="q2" value="a"> color</label>
-                        <label><input type="radio" name="q2" value="b"> background-color</label>
-                        <label><input type="radio" name="q2" value="c"> bgcolor</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <h4>3. Bagaimana cara mendeklarasikan variabel di JavaScript modern?</h4>
-                    <div class="options">
-                        <label><input type="radio" name="q3" value="a"> variable x = 10;</label>
-                        <label><input type="radio" name="q3" value="b"> int x = 10;</label>
-                        <label><input type="radio" name="q3" value="c"> let x = 10;</label>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn" style="width: 100%;">Cek Skor</button>
-            </form>
-
-            <div id="quiz-result"></div>
-        </section>
-    </main>
-
-    <div class="modal-overlay" id="customModal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 1rem;">Pesan Sistem</h3>
-            <p id="modalMessage" style="margin-bottom: 1.5rem;">Pesan di sini</p>
-            <button class="btn" onclick="tutupModal()">Tutup</button>
-        </div>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">TYRO WEB</a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="html.html">HTML</a></li>
+        <li><a href="css.html">CSS</a></li>
+        <li><a href="javascript.html">JavaScript</a></li>
+        <li><a href="playground.html">Playground</a></li>
+        <li><a href="quiz.html" class="active">Quiz</a></li>
+        <li><a href="developer.html">Developer</a></li>
+      </ul>
     </div>
+  </nav>
 
-    <footer>
-        <p>&copy; 2026 Kelompok 7</p>
-    </footer>
+  <main class="container page-content">
+    <section class="content-box">
+      <h2 class="section-title">Uji Pengetahuan Anda</h2>
+      <p class="section-desc">Kerjakan kuis ini untuk menguji pemahaman Anda tentang materi dasar pemrograman web (HTML,
+        CSS, dan JavaScript).</p>
 
-    <script src="scripts/script.js"></script>
+      <form id="quizForm" class="quiz-form">
+        <!-- Indikator Progres Kuis -->
+        <div class="quiz-progress-container">
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: bold; color: var(--text-heading);">
+            <span id="quizProgressText">Soal 1 dari 20</span>
+            <span id="quizPercentText">5% Selesai</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="quizProgressBar"></div>
+          </div>
+        </div>
+
+        <!-- Soal 1 -->
+        <div class="question">
+          <h4>1. Apa yang dikirimkan oleh browser (client) ke server saat pertama kali membuka website?</h4>
+          <div class="options">
+            <label><input type="radio" name="q1" value="a"> Request (Permintaan data)</label>
+            <label><input type="radio" name="q1" value="b"> Response (Balasan data)</label>
+            <label><input type="radio" name="q1" value="c"> Database (Kumpulan data)</label>
+          </div>
+        </div>
+
+        <!-- Soal 2 -->
+        <div class="question">
+          <h4>2. Kumpulan beberapa halaman web yang saling terhubung menggunakan link navigasi disebut...</h4>
+          <div class="options">
+            <label><input type="radio" name="q2" value="a"> Webpage</label>
+            <label><input type="radio" name="q2" value="b"> Website</label>
+            <label><input type="radio" name="q2" value="c"> Web Server</label>
+          </div>
+        </div>
+
+        <!-- Soal 3 -->
+        <div class="question">
+          <h4>3. Bahasa markup standar yang digunakan untuk membuat kerangka dasar struktur halaman web adalah...</h4>
+          <div class="options">
+            <label><input type="radio" name="q3" value="a"> HTML</label>
+            <label><input type="radio" name="q3" value="b"> CSS</label>
+            <label><input type="radio" name="q3" value="c"> JavaScript</label>
+          </div>
+        </div>
+
+        <!-- Soal 4 -->
+        <div class="question">
+          <h4>4. Tag heading manakah yang menghasilkan ukuran teks terbesar di dalam HTML?</h4>
+          <div class="options">
+            <label><input type="radio" name="q4" value="a"> Tag h6</label>
+            <label><input type="radio" name="q4" value="b"> Tag h1</label>
+            <label><input type="radio" name="q4" value="c"> Tag h3</label>
+          </div>
+        </div>
+
+        <!-- Soal 5 -->
+        <div class="question">
+          <h4>5. Tag HTML apa yang tepat digunakan untuk menyorot kata dengan latar belakang kuning stabilo?</h4>
+          <div class="options">
+            <label><input type="radio" name="q5" value="a"> Tag strong</label>
+            <label><input type="radio" name="q5" value="b"> Tag mark</label>
+            <label><input type="radio" name="q5" value="c"> Tag em</label>
+          </div>
+        </div>
+
+        <!-- Soal 6 -->
+        <div class="question">
+          <h4>6. Properti mana pada tag anchor (a) yang digunakan untuk menentukan alamat tujuan link?</h4>
+          <div class="options">
+            <label><input type="radio" name="q6" value="a"> src</label>
+            <label><input type="radio" name="q6" value="b"> href</label>
+            <label><input type="radio" name="q6" value="c"> target</label>
+          </div>
+        </div>
+
+        <!-- Soal 7 -->
+        <div class="question">
+          <h4>7. Properti apa pada tag img yang menampilkan teks alternatif apabila gambar gagal dimuat browser?</h4>
+          <div class="options">
+            <label><input type="radio" name="q7" value="a"> src</label>
+            <label><input type="radio" name="q7" value="b"> alt</label>
+            <label><input type="radio" name="q7" value="c"> controls</label>
+          </div>
+        </div>
+
+        <!-- Soal 8 -->
+        <div class="question">
+          <h4>8. Tag apa yang digunakan untuk membuat daftar yang berurutan menggunakan angka (ordered list)?</h4>
+          <div class="options">
+            <label><input type="radio" name="q8" value="a"> Tag ul</label>
+            <label><input type="radio" name="q8" value="b"> Tag ol</label>
+            <label><input type="radio" name="q8" value="c"> Tag li</label>
+          </div>
+        </div>
+
+        <!-- Soal 9 -->
+        <div class="question">
+          <h4>9. Baris tabel di dalam sintaks HTML didefinisikan menggunakan tag...</h4>
+          <div class="options">
+            <label><input type="radio" name="q9" value="a"> Tag td</label>
+            <label><input type="radio" name="q9" value="b"> Tag tr</label>
+            <label><input type="radio" name="q9" value="c"> Tag th</label>
+          </div>
+        </div>
+
+        <!-- Soal 10 -->
+        <div class="question">
+          <h4>10. Elemen masukan mana yang paling cocok untuk menerima input catatan panjang dari pengguna?</h4>
+          <div class="options">
+            <label><input type="radio" name="q10" value="a"> Tag input type="text"</label>
+            <label><input type="radio" name="q10" value="b"> Tag textarea</label>
+            <label><input type="radio" name="q10" value="c"> Tag select</label>
+          </div>
+        </div>
+
+        <!-- Soal 11 -->
+        <div class="question">
+          <h4>11. Setiap penulisan aturan properti gaya CSS ditulis dalam bentuk pasangan...</h4>
+          <div class="options">
+            <label><input type="radio" name="q11" value="a"> Tag dan Atribut</label>
+            <label><input type="radio" name="q11" value="b"> Property dan Value</label>
+            <label><input type="radio" name="q11" value="c"> Element dan Class</label>
+          </div>
+        </div>
+
+        <!-- Soal 12 -->
+        <div class="question">
+          <h4>12. Simbol apa yang digunakan untuk mengawali penulisan Class selector di CSS?</h4>
+          <div class="options">
+            <label><input type="radio" name="q12" value="a"> Tanda Titik (.)</label>
+            <label><input type="radio" name="q12" value="b"> Tanda Pagar (#)</label>
+            <label><input type="radio" name="q12" value="c"> Tanda Bintang (*)</label>
+          </div>
+        </div>
+
+        <!-- Soal 13 -->
+        <div class="question">
+          <h4>13. Penulisan nilai warna '#4f46e5' dalam CSS merupakan format dari...</h4>
+          <div class="options">
+            <label><input type="radio" name="q13" value="a"> RGB</label>
+            <label><input type="radio" name="q13" value="b"> HEX</label>
+            <label><input type="radio" name="q13" value="c"> HSL</label>
+          </div>
+        </div>
+
+        <!-- Soal 14 -->
+        <div class="question">
+          <h4>14. Properti CSS apa yang digunakan untuk merenggangkan jarak vertikal antar baris tulisan?</h4>
+          <div class="options">
+            <label><input type="radio" name="q14" value="a"> line-height</label>
+            <label><input type="radio" name="q14" value="b"> font-size</label>
+            <label><input type="radio" name="q14" value="c"> font-weight</label>
+          </div>
+        </div>
+
+        <!-- Soal 15 -->
+        <div class="question">
+          <h4>15. Di dalam konsep Box Model CSS, lapisan manakah yang terletak paling luar?</h4>
+          <div class="options">
+            <label><input type="radio" name="q15" value="a"> Padding</label>
+            <label><input type="radio" name="q15" value="b"> Border</label>
+            <label><input type="radio" name="q15" value="c"> Margin</label>
+          </div>
+        </div>
+
+        <!-- Soal 16 -->
+        <div class="question">
+          <h4>16. Nilai properti display apa yang digunakan untuk menyembunyikan elemen dari layar secara total?</h4>
+          <div class="options">
+            <label><input type="radio" name="q16" value="a"> display: block</label>
+            <label><input type="radio" name="q16" value="b"> display: none</label>
+            <label><input type="radio" name="q16" value="c"> display: inline-block</label>
+          </div>
+        </div>
+
+        <!-- Soal 17 -->
+        <div class="question">
+          <h4>17. Nilai position mana yang membuat elemen menempel tetap pada layar dan tidak ikut tergeser saat
+            di-scroll?</h4>
+          <div class="options">
+            <label><input type="radio" name="q17" value="a"> fixed</label>
+            <label><input type="radio" name="q17" value="b"> absolute</label>
+            <label><input type="radio" name="q17" value="c"> static</label>
+          </div>
+        </div>
+
+        <!-- Soal 18 -->
+        <div class="question">
+          <h4>18. Properti Flexbox apa yang digunakan untuk menyebarkan atau menyelaraskan elemen secara horizontal?
+          </h4>
+          <div class="options">
+            <label><input type="radio" name="q18" value="a"> justify-content</label>
+            <label><input type="radio" name="q18" value="b"> align-items</label>
+            <label><input type="radio" name="q18" value="c"> flex-direction</label>
+          </div>
+        </div>
+
+        <!-- Soal 19 -->
+        <div class="question">
+          <h4>19. Cara untuk memicu kontainer agar membentuk layout kisi dua dimensi (baris dan kolom) adalah...</h4>
+          <div class="options">
+            <label><input type="radio" name="q19" value="a"> display: flex</label>
+            <label><input type="radio" name="q19" value="b"> display: grid</label>
+            <label><input type="radio" name="q19" value="c"> display: block</label>
+          </div>
+        </div>
+
+        <!-- Soal 20 -->
+        <div class="question">
+          <h4>20. Kegunaan penulisan media query (@media) di dalam file CSS adalah untuk...</h4>
+          <div class="options">
+            <label><input type="radio" name="q20" value="a"> Menambahkan pemutar video</label>
+            <label><input type="radio" name="q20" value="b"> Membuat layout responsif di berbagai ukuran layar</label>
+            <label><input type="radio" name="q20" value="c"> Mengubah font tulisan menjadi tebal</label>
+          </div>
+        </div>
+
+        <!-- Progress Bar & Navigasi Kuis -->
+        <div class="quiz-navigation">
+          <button type="button" id="prevBtn" class="btn"
+            style="background-color: #64748b; border-color: #64748b;">Sebelumnya</button>
+          <button type="button" id="nextBtn" class="btn">Berikutnya</button>
+          <button type="submit" id="submitBtn" class="btn" style="display: none;">Cek Skor</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="customModal">
+    <div class="modal-content">
+      <h3 style="margin-bottom: 1rem;">Hasil Kuis</h3>
+      <p id="modalMessage" style="margin-bottom: 1.5rem;">Pesan hasil kuis di sini</p>
+      <button class="btn" onclick="tutupModal()">Tutup</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Proyek Kelompok 7 - TYRO WEB. Hak Cipta Dilindungi.</p>
+  </footer>
+
+  <script src="scripts/script.js"></script>
 </body>
+
 </html>
