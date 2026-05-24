@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-    /* === TEMA: PAPER WHITE === */
     --primary: #1E3A8A;
     --primary-dark: #152861;
     --primary-glow: rgba(30, 58, 138, 0.15);
 
-    /* Warna Kategori (Sesuai bahasa pemrograman) */
     --html-color: #E34F26;
     --css-color: #264DE4;
     --js-color: #D97706;
@@ -19,13 +17,13 @@
 
     --text-heading: #1E3A8A;
     --text-body: #374151;
-    /* Dark slate */
+
     --text-muted: #6B7280;
-    /* Gray */
+
     --text-on-dark: #FFFFFF;
     --text-on-dark-muted: rgba(255, 255, 255, 0.8);
 
-    /* Warna untuk Area Kode (Sleek Dark Mode) */
+    /* Warna untuk Area Kode*/
     --code-bg: #0F172A;
     --code-text: #F8FAFC;
     --code-keyword: #818CF8;
@@ -36,14 +34,12 @@
     --code-dot-yellow: #F59E0B;
     --code-dot-green: #10B981;
 
-    /* Border (Profesional & Rapi) */
+
     --border-color: rgba(30, 58, 138, 0.15);
-    /* Biru navy transparan */
     --border-radius-sm: 6px;
     --border-radius-md: 12px;
     --border-radius-lg: 16px;
 
-    /* Bayangan (Shadows - Crisp & Clean) */
     --shadow-sm: 0 1px 2px rgba(30, 58, 138, 0.05);
     --shadow-md: 0 4px 12px rgba(30, 58, 138, 0.08), 0 2px 4px rgba(30, 58, 138, 0.04);
     --shadow-lg: 0 12px 32px rgba(30, 58, 138, 0.12), 0 4px 8px rgba(30, 58, 138, 0.04);
@@ -54,9 +50,7 @@
     --transition-mid: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ==========================================================================
-   RESET & DASAR
-   ========================================================================== */
+/* RESET & DASAR */
 *,
 *::before,
 *::after {
@@ -111,9 +105,7 @@ a:hover {
     padding: 0 1.5rem;
 }
 
-/* ==========================================================================
-   NAVIGASI (NAVBAR)
-   ========================================================================== */
+/* NAVIGASI (NAVBAR) */
 nav {
     background-color: var(--bg-nav);
     backdrop-filter: blur(12px);
@@ -195,14 +187,10 @@ nav {
     transition: var(--transition-mid);
 }
 
-/* ==========================================================================
-   HEADER & HERO SECTION (Blueprint Effect)
-   ========================================================================== */
 header#home {
     text-align: center;
     padding: 5rem 1.5rem 4rem;
     position: relative;
-    /* Efek kotak-kotak blueprint tipis dan bersih */
     background-image:
         linear-gradient(var(--border-color) 1px, transparent 1px),
         linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
@@ -210,7 +198,7 @@ header#home {
     background-position: center center;
 }
 
-/* Membuat gradient fade out ke bawah agar grid menyatu dengan halaman */
+
 header#home::after {
     content: '';
     position: absolute;
@@ -244,9 +232,7 @@ header#home::after {
     line-height: 1.8;
 }
 
-/* ==========================================================================
-   KARTU (CARDS)
-   ========================================================================== */
+/* CARDS */
 .hero-cards {
     position: relative;
     z-index: 1;
@@ -316,9 +302,7 @@ header#home::after {
     line-height: 1.7;
 }
 
-/* ==========================================================================
-   HALAMAN MATERI (CONTENT BOX)
-   ========================================================================== */
+/* CONTENT BOX */
 .page-content {
     padding: 3rem 1.5rem 4rem;
 }
@@ -343,6 +327,13 @@ header#home::after {
 
 .content-box:hover {
     box-shadow: var(--shadow-md);
+}
+
+.content-box > .section-desc {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1.5rem;
+    max-width: none;
 }
 
 .content-box h3 {
@@ -370,9 +361,7 @@ header#home::after {
     margin-bottom: 0.5rem;
 }
 
-/* ==========================================================================
-   TAMPILAN KODE & OUTPUT (CODE SHOWCASE)
-   ========================================================================== */
+/* TAMPILAN KODE & OUTPUT */
 .content-box code,
 p code,
 li code {
@@ -469,9 +458,7 @@ textarea.code-block {
     box-shadow: inset 0 2px 10px rgba(30, 58, 138, 0.02);
 }
 
-/* ==========================================================================
-   TOMBOL (BUTTONS)
-   ========================================================================== */
+/* BUTTONS */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -501,9 +488,7 @@ textarea.code-block {
     box-shadow: var(--shadow-sm);
 }
 
-/* ==========================================================================
-   PLAYGROUND
-   ========================================================================== */
+/* PLAYGROUND */
 .playground-container {
     padding: 0;
 }
@@ -523,7 +508,6 @@ textarea.code-block {
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-color);
     min-width: 0;
-    /* Mencegah grid item memaksakan lebar default konten */
 }
 
 .panel label {
@@ -596,9 +580,7 @@ textarea.code-block {
     display: block;
 }
 
-/* ==========================================================================
-   KUIS (QUIZ)
-   ========================================================================== */
+/* QUIZ */
 .quiz-form {
     display: flex;
     flex-direction: column;
@@ -687,14 +669,11 @@ textarea.code-block {
     }
 }
 
-/* ==========================================================================
-   MODAL & TABEL
-   ========================================================================== */
+/* MODAL & TABEL */
 .modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(15, 23, 42, 0.7);
-    /* Darker overlay */
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -760,9 +739,7 @@ table tr:last-child td {
     border-bottom: none;
 }
 
-/* ==========================================================================
-   FOOTER & SCROLLBAR
-   ========================================================================== */
+/* FOOTER & SCROLLBAR */
 footer {
     background: var(--bg-footer);
     color: var(--text-muted);
@@ -810,15 +787,13 @@ textarea::-webkit-scrollbar-thumb {
     color: var(--primary-dark);
 }
 
-/* ==========================================================================
-   RESPONSIVE (MEDIA QUERIES)
-   ========================================================================== */
+
+
 @media (max-width: 768px) {
     .nav-toggle {
         display: flex;
     }
 
-    /* Animasi Hamburger Menu ke Tanda 'X' */
     .nav-toggle.active span:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
     }
@@ -832,7 +807,6 @@ textarea::-webkit-scrollbar-thumb {
         transform: translateY(-7px) rotate(-45deg);
     }
 
-    /* Menu Dropdown Laci Mobile Premium */
     .nav-links {
         display: none;
         position: absolute;
@@ -925,13 +899,11 @@ textarea::-webkit-scrollbar-thumb {
         font-size: 1.6rem;
     }
 
-    /* Perataan Opsi Kuis di HP */
     .options label {
         padding: 0.7rem 0.9rem;
         font-size: 0.9rem;
     }
 
-    /* Penyelarasan container Playground di HP */
     .playground-container {
         display: flex;
         flex-direction: column;
@@ -971,7 +943,6 @@ textarea::-webkit-scrollbar-thumb {
         font-size: 1.15rem;
     }
 
-    /* Flexbox Alignment Simulator wrap untuk layar sangat kecil */
     #simFlexBox {
         gap: 8px;
     }

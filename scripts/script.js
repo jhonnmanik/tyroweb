@@ -55,7 +55,6 @@ if (htmlEditor && cssEditor && jsEditor) {
     cssEditor.addEventListener('keyup', updatePlayground);
     jsEditor.addEventListener('keyup', updatePlayground);
     
-    // Bind to templates onchange if applicable
     const selector = document.getElementById('templateSelector');
     if (selector) {
         selector.addEventListener('change', updatePlayground);
@@ -64,7 +63,7 @@ if (htmlEditor && cssEditor && jsEditor) {
     updatePlayground(); 
 }
 
-// 5. Quiz Logic (20 Questions - Step by Step)
+// 5. Quiz Logic
 const quizForm = document.getElementById('quizForm');
 if (quizForm) {
     const questions = document.querySelectorAll('.question');

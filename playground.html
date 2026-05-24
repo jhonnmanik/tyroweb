@@ -34,7 +34,7 @@
     <p class="section-desc" style="text-align: center;">Coba ketik kode HTML, CSS, dan JavaScript di bawah ini. Hasilnya
       akan langsung ter-render secara real-time pada panel pratinjau!</p>
 
-    <!-- Template selector (Clean, easy & interesting) -->
+    <!-- Template selector -->
     <div
       style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; padding: 0 1rem; text-align: center;">
       <span style="font-size: 13px; font-weight: bold; color: var(--text-heading);">Pilih Template:</span>
@@ -73,11 +73,11 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 Proyek Kelompok 7 - TYRO WEB. Hak Cipta Dilindungi.</p>
+    <p>&copy; 2026 Kelompok 7 - TYRO WEB.</p>
   </footer>
 
   <script>
-    // 4 Easy & Interesting Beginner-friendly templates (Website Features)
+    // 4 Easy & Interesting Beginner-friendly templates
     const templates = {
       magicBox: {
         html: `<div class="halaman">\n  <h1>Selamat Datang!</h1>\n  <p>Anda sedang belajar HTML, CSS, dan JavaScript di TYRO WEB.</p>\n  <button id="tombolAksi">Klik Saya</button>\n</div>`,
@@ -110,7 +110,7 @@
       document.getElementById('css-editor').value = selected.css;
       document.getElementById('js-editor').value = selected.js;
 
-      // Render instan menggunakan properti srcdoc (100% aman dari hambatan keamanan CORS lokal)
+      // Render instan
       const liveOutput = document.getElementById('live-output');
       if (liveOutput) {
         const htmlCode = selected.html;
