@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground - TYRO WEB</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/auth-nav.css">
+</head>
+
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">TYRO WEB</a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="playground.html" class="active">Playground</a></li>
+        <li><a href="developer.html">Developer</a></li>
+        <li id="navAuthItem"><a href="login.html" class="btn-nav-login">Masuk</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h2 class="section-title" style="text-align: center; margin-top: 2rem;">Code Playground</h2>
+    <p class="section-desc" style="text-align: center;">Coba ketik kode HTML, CSS, dan JavaScript di bawah ini. Hasilnya
+      akan langsung ter-render secara real-time pada panel pratinjau!</p>
+
+    <!-- Template selector -->
+    <div
+      style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; padding: 0 1rem; text-align: center;">
+      <span style="font-size: 13px; font-weight: bold; color: var(--text-heading);">Pilih Template:</span>
+      <select id="templateSelector" onchange="loadTemplate(this.value)"
+        style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 13px; font-weight: 600; outline: none; background: white; cursor: pointer; color: var(--text-heading); max-width: 100%; box-sizing: border-box;">
+        <option value="magicBox">Pondasi Web (HTML + CSS + JS)</option>
+        <option value="darkMode">Tema Gelap / Terang (Dark Mode)</option>
+        <option value="faqAccordion">Tanya Jawab (FAQ Accordion)</option>
+        <option value="modalPopup">Pop-up Modal Interaktif</option>
+      </select>
+    </div>
+
+    <section class="playground-container">
+      <div class="editor-panels">
+        <div class="panel html-panel">
+          <label>HTML</label>
+          <textarea id="html-editor" spellcheck="false"></textarea>
+        </div>
+
+        <div class="panel css-panel">
+          <label>CSS</label>
+          <textarea id="css-editor" spellcheck="false"></textarea>
+        </div>
+
+        <div class="panel js-panel">
+          <label>JavaScript</label>
+          <textarea id="js-editor" spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <div class="output-panel">
+        <label>Hasil (Live Preview)</label>
+        <iframe id="live-output" title="Live Output"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Kelompok 7 - TYRO WEB.</p>
+  </footer>
+
+  <script>
+    // 4 Easy & Interesting Beginner-friendly templates
+    const templates = {
+      magicBox: {
+        html: `<div class="halaman">\n  <h1>Selamat Datang!</h1>\n  <p>Anda sedang belajar HTML, CSS, dan JavaScript di TYRO WEB.</p>\n  <button id="tombolAksi">Klik Saya</button>\n</div>`,
+        css: `body {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  background-color: #f8fafc;\n  font-family: Arial, sans-serif;\n  margin: 0;\n}\n.halaman {\n  background: white;\n  padding: 30px;\n  border-radius: 8px;\n  border: 1.5px solid #cbd5e1;\n  text-align: center;\n  max-width: 400px;\n}\nh1 {\n  color: #1e3a8a;\n  margin: 0 0 10px;\n  font-size: 24px;\n}\np {\n  color: #374151;\n  margin-bottom: 20px;\n  line-height: 1.6;\n}\nbutton {\n  background: #1e3a8a;\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  border-radius: 6px;\n  cursor: pointer;\n  font-weight: bold;\n  transition: background 0.2s;\n}\nbutton:hover {\n  background: #1d4ed8;\n}`,
+        js: `const tombol = document.getElementById('tombolAksi');\ntombol.addEventListener('click', function() {\n  alert('Selamat! Anda berhasil menjalankan JavaScript pertama Anda.');\n});`
+      },
+      darkMode: {
+        html: `<div class="kartu">\n  <h2>Mode Tampilan</h2>\n  <p>Klik tombol di bawah untuk beralih antara tema terang dan tema gelap pada halaman ini.</p>\n  <button id="tombolTema">Ubah Tema</button>\n</div>`,
+        css: `body {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  background-color: #f1f5f9;\n  color: #1e293b;\n  font-family: Arial, sans-serif;\n  margin: 0;\n  transition: background-color 0.3s, color 0.3s;\n}\n.kartu {\n  background: white;\n  padding: 30px;\n  border-radius: 12px;\n  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);\n  border: 1px solid #e2e8f0;\n  text-align: center;\n  max-width: 320px;\n  transition: background-color 0.3s, border-color 0.3s;\n}\nh2 {\n  margin-top: 0;\n}\nbutton {\n  background: #0f172a;\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  border-radius: 6px;\n  cursor: pointer;\n  font-weight: bold;\n}\nbody.dark-mode {\n  background-color: #0f172a;\n  color: #f1f5f9;\n}\nbody.dark-mode .kartu {\n  background-color: #1e293b;\n  border-color: #334155;\n}\nbody.dark-mode button {\n  background: #f1f5f9;\n  color: #0f172a;\n}`,
+        js: `const tombolTema = document.getElementById('tombolTema');\ntombolTema.addEventListener('click', function() {\n  document.body.classList.toggle('dark-mode');\n});`
+      },
+      faqAccordion: {
+        html: `<div class="akordion-container">\n  <h2 style="text-align: center; margin-bottom: 20px;">Pertanyaan Umum</h2>\n  \n  <div class="akordion-item">\n    <button class="akordion-tombol">Apa itu HTML?</button>\n    <div class="akordion-konten">\n      <p>HTML (HyperText Markup Language) adalah bahasa standar yang digunakan untuk membuat dan menyusun kerangka sebuah halaman web.</p>\n    </div>\n  </div>\n  \n  <div class="akordion-item">\n    <button class="akordion-tombol">Apa itu CSS?</button>\n    <div class="akordion-konten">\n      <p>CSS (Cascading Style Sheets) adalah bahasa yang digunakan untuk menghias, menata, dan memperindah tampilan halaman web agar lebih menarik.</p>\n    </div>\n  </div>\n  \n  <div class="akordion-item">\n    <button class="akordion-tombol">Apa itu JavaScript?</button>\n    <div class="akordion-konten">\n      <p>JavaScript adalah bahasa pemrograman yang digunakan untuk membuat halaman web menjadi interaktif, dinamis, dan hidup.</p>\n    </div>\n  </div>\n</div>`,
+        css: `body {\n  background-color: #f8fafc;\n  font-family: Arial, sans-serif;\n  margin: 40px auto;\n  max-width: 500px;\n  padding: 0 20px;\n}\n.akordion-item {\n  border: 1px solid #e2e8f0;\n  border-radius: 8px;\n  margin-bottom: 10px;\n  background: white;\n  overflow: hidden;\n}\n.akordion-tombol {\n  width: 100%;\n  background: none;\n  border: none;\n  padding: 15px 20px;\n  text-align: left;\n  font-size: 16px;\n  font-weight: bold;\n  color: #1e293b;\n  cursor: pointer;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  transition: background 0.2s;\n}\n.akordion-tombol:hover {\n  background: #f1f5f9;\n}\n.akordion-konten {\n  display: none;\n  padding: 0 20px 15px;\n  color: #475569;\n  font-size: 14px;\n  line-height: 1.6;\n  border-top: 1px solid #f1f5f9;\n}\n.akordion-item.aktif .akordion-konten {\n  display: block;\n}\n.akordion-item.aktif .akordion-tombol {\n  background: #e2e8f0;\n}`,
+        js: `const tombolAkordion = document.querySelectorAll('.akordion-tombol');\ntombolAkordion.forEach(tombol => {\n  tombol.addEventListener('click', function() {\n    const item = this.parentElement;\n    item.classList.toggle('aktif');\n  });\n});`
+      },
+      modalPopup: {
+        html: `<div class="halaman">\n  <h2>Demo Pop-up Modal</h2>\n  <p>Klik tombol di bawah untuk menampilkan jendela dialog atau pop-up interaktif.</p>\n  <button id="bukaModal">Buka Modal</button>\n</div>\n\n<div id="modalOverlay" class="modal-overlay">\n  <div class="modal-box">\n    <h3>Informasi Penting</h3>\n    <p>Ini adalah pop-up modal interaktif yang sering dijumpai di website modern untuk menyajikan informasi penting secara fokus.</p>\n    <button id="tutupModal">Tutup</button>\n  </div>\n</div>`,
+        css: `body {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  background-color: #faf5ff;\n  font-family: Arial, sans-serif;\n  margin: 0;\n}\n.halaman {\n  background: white;\n  padding: 30px;\n  border-radius: 12px;\n  border: 1px solid #e9d5ff;\n  text-align: center;\n  max-width: 350px;\n  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);\n}\n#bukaModal {\n  background: #7e22ce;\n  color: white;\n  border: none;\n  padding: 10px 20px;\n  border-radius: 6px;\n  cursor: pointer;\n  font-weight: bold;\n}\n.modal-overlay {\n  display: none;\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.5);\n  justify-content: center;\n  align-items: center;\n  z-index: 999;\n}\n.modal-overlay.aktif {\n  display: flex;\n}\n.modal-box {\n  background: white;\n  padding: 25px;\n  border-radius: 8px;\n  max-width: 400px;\n  width: 90%;\n  text-align: center;\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);\n  animation: popIn 0.3s ease-out;\n}\n#tutupModal {\n  background: #ef4444;\n  color: white;\n  border: none;\n  padding: 8px 16px;\n  border-radius: 4px;\n  cursor: pointer;\n  font-weight: bold;\n  margin-top: 15px;\n}\n@keyframes popIn {\n  from { transform: scale(0.8); opacity: 0; }\n  to { transform: scale(1); opacity: 1; }\n}`,
+        js: `const bukaBtn = document.getElementById('bukaModal');\nconst tutupBtn = document.getElementById('tutupModal');\nconst overlay = document.getElementById('modalOverlay');\n\nbukaBtn.addEventListener('click', function() {\n  overlay.classList.add('aktif');\n});\ntutupBtn.addEventListener('click', function() {\n  overlay.classList.remove('aktif');\n});\noverlay.addEventListener('click', function(e) {\n  if (e.target === overlay) {\n    overlay.classList.remove('aktif');\n  }\n});`
+      }
+    };
+
+    // Load templates in editor
+    function loadTemplate(templateName) {
+      const selected = templates[templateName];
+      if (!selected) return;
+
+      document.getElementById('html-editor').value = selected.html;
+      document.getElementById('css-editor').value = selected.css;
+      document.getElementById('js-editor').value = selected.js;
+
+      // Render instan
+      const liveOutput = document.getElementById('live-output');
+      if (liveOutput) {
+        const htmlCode = selected.html;
+        const cssCode = "<style>" + selected.css + "</style>";
+        const jsCode = "<script>" + selected.js + "<\/script>";
+        liveOutput.srcdoc = htmlCode + cssCode + jsCode;
+      }
+    }
+
+    // Initialize with magicBox
+    window.onload = function () {
+      loadTemplate('magicBox');
+    };
+  </script>
+  <script src="scripts/script.js"></script>
+  <script src="scripts/auth-nav.js"></script>
+</body>
+
+</html>

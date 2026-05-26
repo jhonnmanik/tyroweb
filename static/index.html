@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TYRO WEB - Belajar Web dari Nol</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/auth-nav.css">
+</head>
+
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">TYRO WEB</a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="playground.html">Playground</a></li>
+        <li><a href="developer.html">Developer</a></li>
+        <li id="navAuthItem"><a href="login.html" class="btn-nav-login">Masuk</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header id="home" class="container">
+    <h1 class="hero-title">Belajar Dasar Pemrograman Web</h1>
+    <p class="section-desc">
+      Website pembelajaran terstruktur untuk memahami dasar pembuatan website dari nol.
+      Materi disusun mulai dari cara kerja website, HTML, CSS, JavaScript, latihan kode, sampai kuis interaktif.
+    </p>
+
+    <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;">
+      <a href="html.html" class="btn">Mulai Belajar</a>
+      <a href="playground.html" class="btn" style="background: #374151;">Buka Playground</a>
+    </div>
+
+    <div class="hero-cards">
+      <a href="html.html" class="card html">
+        <h3>1. HTML</h3>
+        <p>Belajar struktur halaman dasar, tag penting, navigasi link, penataan gambar, tabel data, form masukan, dan
+          semantik dokumen.</p>
+      </a>
+      <a href="css.html" class="card css">
+        <h3>2. CSS</h3>
+        <p>Belajar selector gaya, pengaturan warna, tipografi font, konsep Box Model, peletakan display, posisi elemen,
+          hingga Flexbox dan Grid responsif.</p>
+      </a>
+      <a href="javascript.html" class="card js">
+        <h3>3. JavaScript</h3>
+        <p>Belajar logika dasar pemrograman, variabel modern, percabangan if-else, perulangan loop, fungsi terisolasi,
+          manipulasi DOM, dan event handling.</p>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="content-box">
+      <h2>Pentingnya Belajar Pemrograman Web</h2>
+      <p>
+        Pemrograman web adalah gerbang utama dalam memahami dunia teknologi digital. Dengan mempelajari dasar-dasar ini,
+        Anda dapat merancang halaman web mandiri, membuat aplikasi interaktif, dan memahami bagaimana sistem internet
+        modern menyajikan informasi.
+      </p>
+      <p style="margin-top: 1rem;">
+        TYRO WEB dirancang khusus untuk pemula agar dapat belajar secara bertahap dari pemahaman dasar hingga
+        mempraktekkan langsung kode di layar kerja playground terintegrasi.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Kelompok 7 - TYRO WEB.</p>
+  </footer>
+
+  <script src="scripts/script.js"></script>
+  <script src="scripts/auth-nav.js"></script>
+</body>
+
+</html>

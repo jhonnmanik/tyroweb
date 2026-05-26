@@ -1,0 +1,59 @@
+(async function initAuthNav() {
+  const authItem = document.getElementById('navAuthItem');
+  if (!authItem) return;
+
+  try {
+    const res = await fetch('/api/auth/me');
+    const data = await res.json();
+
+    if (data.logged_in) {
+      authItem.innerHTML = `
+        <a href="dashboard.html" class="nav-user-info">
+          <div class="nav-user-avatar">${data.user.username.charAt(0).toUpperCase()}</div>
+          <span>${data.user.username}</span>
+        </a>`;
+    } else {
+      authItem.innerHTML = `<a href="login.html" class="btn-nav-login">Masuk</a>`;
+    }
+  } catch (e) {
+    authItem.innerHTML = `<a href="login.html" class="btn-nav-login">Masuk</a>`;
+  }
+})();
+
+async function logoutUser() {
+  try {
+    await fetch('/api/auth/logout', { method: 'POST' });
+  } catch(e) {}
+  window.location.href = 'index.html';
+}
+.nav-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-heading, #111827);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: all 0.15s;
+}
+
+.nav-user-info:hover {
+  background: #f0f4ff;
+  border-color: #1e3a8a;
+}

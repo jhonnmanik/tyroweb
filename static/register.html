@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar - TYRO WEB</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 50%, #f0f4ff 100%);
+      padding: 2rem 1rem;
+    }
+
+    .auth-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(30, 58, 138, 0.12);
+      border: 1px solid #e0e7ff;
+      animation: slideUp 0.4s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .auth-logo a {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .auth-logo p {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .auth-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111827;
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .btn-google {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      background: white;
+      color: #374151;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-google:hover {
+      background: #f9fafb;
+      border-color: #9ca3af;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-google svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 1.5rem 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+
+    .divider span {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #111827;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+      background: #fafafa;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+      background: white;
+    }
+
+    .form-group input.error { border-color: #ef4444; }
+    .form-group input.valid { border-color: #22c55e; }
+
+    /* Password strength bar */
+    .strength-bar {
+      height: 4px;
+      border-radius: 2px;
+      margin-top: 6px;
+      transition: all 0.3s;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.3s, background 0.3s;
+      width: 0%;
+    }
+
+    .strength-text {
+      font-size: 0.75rem;
+      margin-top: 3px;
+      color: #9ca3af;
+    }
+
+    .btn-auth {
+      width: 100%;
+      padding: 12px;
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-auth:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(30, 58, 138, 0.25);
+    }
+
+    .btn-auth:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .alert {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .alert.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      display: block;
+    }
+
+    .alert.success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #16a34a;
+      display: block;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .auth-footer a {
+      color: #1e3a8a;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .auth-footer a:hover { text-decoration: underline; }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Syarat password */
+    .password-rules {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        <a href="index.html">TYRO WEB</a>
+        <p>Platform belajar pemrograman web</p>
+      </div>
+
+      <h2 class="auth-title">Buat Akun Baru</h2>
+
+      <div class="alert" id="alertBox"></div>
+
+      <!-- Tombol Google -->
+      <button class="btn-google" onclick="daftarDenganGoogle()">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Daftar dengan Google
+      </button>
+
+      <div class="divider"><span>atau daftar dengan email</span></div>
+
+      <form id="registerForm" onsubmit="daftarDenganEmail(event)">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="contoh: budi123" required
+            minlength="3" maxlength="20" oninput="validasiUsername(this)">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="nama@email.com" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Minimal 6 karakter" required
+            minlength="6" oninput="cekKekuatanPassword(this.value)">
+          <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+          <div class="strength-text" id="strengthText">Masukkan password</div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Konfirmasi Password</label>
+          <input type="password" id="confirmPassword" placeholder="Ulangi password" required
+            oninput="cekKonfirmasi()">
+        </div>
+
+        <button type="submit" class="btn-auth" id="btnSubmit">Buat Akun</button>
+      </form>
+
+      <div class="auth-footer">
+        Sudah punya akun? <a href="login.html">Masuk di sini</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    // ── Validasi username (real-time) ───────────────────────
+    function validasiUsername(input) {
+      const val = input.value;
+      const valid = /^[a-zA-Z0-9_]{3,20}$/.test(val);
+      input.className = val.length > 0 ? (valid ? 'valid' : 'error') : '';
+    }
+
+    // ── Cek kekuatan password ───────────────────────────────
+    function cekKekuatanPassword(pass) {
+      const fill = document.getElementById('strengthFill');
+      const text = document.getElementById('strengthText');
+      let kekuatan = 0;
+
+      if (pass.length >= 6) kekuatan++;
+      if (pass.length >= 10) kekuatan++;
+      if (/[A-Z]/.test(pass)) kekuatan++;
+      if (/[0-9]/.test(pass)) kekuatan++;
+      if (/[^a-zA-Z0-9]/.test(pass)) kekuatan++;
+
+      const level = [
+        { width: '0%',   color: '#e5e7eb', label: 'Masukkan password' },
+        { width: '25%',  color: '#ef4444', label: '🔴 Lemah' },
+        { width: '50%',  color: '#f97316', label: '🟠 Cukup' },
+        { width: '75%',  color: '#eab308', label: '🟡 Sedang' },
+        { width: '90%',  color: '#22c55e', label: '🟢 Kuat' },
+        { width: '100%', color: '#16a34a', label: '✅ Sangat Kuat' },
+      ];
+
+      const idx = pass.length === 0 ? 0 : Math.min(kekuatan, 5);
+      fill.style.width = level[idx].width;
+      fill.style.background = level[idx].color;
+      text.textContent = level[idx].label;
+      text.style.color = level[idx].color;
+    }
+
+    // ── Cek konfirmasi password ─────────────────────────────
+    function cekKonfirmasi() {
+      const pass = document.getElementById('password').value;
+      const conf = document.getElementById('confirmPassword');
+      conf.className = conf.value === pass ? 'valid' : 'error';
+    }
+
+    // ── Daftar dengan Email ─────────────────────────────────
+    async function daftarDenganEmail(e) {
+      e.preventDefault();
+      const alertBox = document.getElementById('alertBox');
+      const btn = document.getElementById('btnSubmit');
+
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirmPassword').value;
+
+      // Validasi sisi klien
+      if (password !== confirm) {
+        alertBox.className = 'alert error';
+        alertBox.textContent = 'Password dan konfirmasi tidak sama!';
+        return;
+      }
+
+      if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+        alertBox.className = 'alert error';
+        alertBox.textContent = 'Username hanya boleh huruf, angka, dan underscore (3-20 karakter).';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Mendaftarkan...';
+      alertBox.className = 'alert';
+      alertBox.textContent = '';
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          alertBox.className = 'alert success';
+          alertBox.textContent = data.message + ' Mengalihkan ke halaman login...';
+          setTimeout(() => window.location.href = 'login.html', 1800);
+        } else {
+          alertBox.className = 'alert error';
+          alertBox.textContent = data.message || 'Pendaftaran gagal.';
+          btn.disabled = false;
+          btn.innerHTML = 'Buat Akun';
+        }
+      } catch (err) {
+        alertBox.className = 'alert error';
+        alertBox.textContent = 'Tidak dapat terhubung ke server.';
+        btn.disabled = false;
+        btn.innerHTML = 'Buat Akun';
+      }
+    }
+
+    // ── Daftar / Login dengan Google ───────────────────────
+    function daftarDenganGoogle() {
+      if (typeof google === 'undefined') {
+        document.getElementById('alertBox').className = 'alert error';
+        document.getElementById('alertBox').textContent =
+          'Google Sign-In belum dikonfigurasi. Isi Client ID terlebih dahulu.';
+        return;
+      }
+
+      google.accounts.id.initialize({
+        client_id: document.querySelector('meta[name="google-signin-client_id"]').content,
+        callback: handleGoogleResponse
+      });
+
+      google.accounts.id.prompt();
+    }
+
+    async function handleGoogleResponse(response) {
+      const alertBox = document.getElementById('alertBox');
+      try {
+        const res = await fetch('/api/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: response.credential })
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          alertBox.className = 'alert success';
+          alertBox.textContent = 'Akun Google berhasil terhubung! Mengalihkan...';
+          setTimeout(() => window.location.href = 'index.html', 1000);
+        } else {
+          alertBox.className = 'alert error';
+          alertBox.textContent = data.error || 'Gagal login dengan Google.';
+        }
+      } catch (err) {
+        alertBox.className = 'alert error';
+        alertBox.textContent = 'Tidak dapat terhubung ke server.';
+      }
+    }
+  </script>
+</body>
+
+</html>

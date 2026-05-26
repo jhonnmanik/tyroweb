@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim Pengembang - TYRO WEB</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/auth-nav.css">
+    <style>
+        /* Styling Khusus Halaman Tim Pengembang */
+        .dev-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .developer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .developer-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-mid);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hiasan latar belakang atas kartu */
+        .developer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            opacity: 0.08;
+            z-index: 1;
+        }
+
+        .developer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        /* Bingkai Foto / Frame */
+        .photo-frame {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            border: 4px solid var(--bg-surface);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition-mid);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .developer-card:hover .photo-frame {
+            transform: scale(1.08);
+            border-color: var(--primary-glow);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            /* Disembunyikan sampai dimuat sukses oleh script onload */
+        }
+
+        /* Avatar Awal Nama sebagai fallback jika berkas foto belum diunggah */
+        .photo-placeholder {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 2px rgba(30, 58, 138, 0.1);
+            transition: var(--transition-mid);
+        }
+
+        .developer-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .developer-card .role {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .developer-card .desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* Jejaring Sosial / Tautan */
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-page);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: var(--transition-fast);
+        }
+
+        .social-icon:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">TYRO WEB</a>
+            <button class="nav-toggle" aria-label="Buka menu navigasi">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="developer.html" class="active">Developer</a></li>
+                <li id="navAuthItem"><a href="login.html" class="btn-nav-login">Masuk</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container page-content">
+        <section class="content-box">
+            <div class="dev-header">
+                <h2 class="section-title">Tim Pengembang</h2>
+                <p class="section-desc">Kenali anggota Kelompok 7 di balik perancangan dan pengembangan website media
+                    pembelajaran TYRO WEB.</p>
+            </div>
+
+            <div class="developer-grid">
+                <!-- 1. Jhon Cholosian Manik -->
+                <div class="developer-card">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" id="placeholder-jhon">JM</div>
+                        <img src="assets/image/jhon.jpeg" alt="Jhon Cholosian Manik"
+                            onload="document.getElementById('placeholder-jhon').style.display='none'; this.style.display='block';"
+                            onerror="this.style.display='none'; document.getElementById('placeholder-jhon').style.display='flex';">
+                    </div>
+                    <h3>Jhon Cholosian Manik</h3>
+                    <div class="social-links" style="margin-top: 0.5rem;">
+                        <a href="https://instagram.com/jhonnmanik" target="_blank" rel="noopener noreferrer"
+                            class="social-icon" title="Instagram">
+                            <img src="assets/image/ig.jpg" alt="Instagram"
+                                style="width: 20px; height: 20px; object-fit: contain;">
+                        </a>
+                        <a href="https://wa.me/6285664022618" target="_blank" rel="noopener noreferrer"
+                            class="social-icon" title="WhatsApp">
+                            <img src="assets/image/wa.jpg" alt="WhatsApp"
+                                style="width: 20px; height: 20px; object-fit: contain;">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. Ade Chrisye Harpana Nababan -->
+                <div class="developer-card">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" id="placeholder-ade">AC</div>
+                        <img src="assets/image/ade.jpeg" alt="Ade Chrisye Harpana Nababan"
+                            onload="document.getElementById('placeholder-ade').style.display='none'; this.style.display='block';"
+                            onerror="this.style.display='none'; document.getElementById('placeholder-ade').style.display='flex';">
+                    </div>
+                    <h3>Ade Chrisye Harpana Nababan</h3>
+                    <div class="social-links" style="margin-top: 0.5rem;">
+                        <a href="https://instagram.com/chrisyeagerr" target="_blank" rel="noopener noreferrer"
+                            class="social-icon" title="Instagram">
+                            <img src="assets/image/ig.jpg" alt="Instagram"
+                                style="width: 20px; height: 20px; object-fit: contain;">
+                        </a>
+                        <a href="https://wa.me/6282253285028" target="_blank" rel="noopener noreferrer"
+                            class="social-icon" title="WhatsApp">
+                            <img src="assets/image/wa.jpg" alt="WhatsApp"
+                                style="width: 20px; height: 20px; object-fit: contain;">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. Andri Ghihary Sitepu -->
+                <div class="developer-card">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" id="placeholder-andri">AG</div>
+                        <img src="assets/image/andri.jpeg" alt="Andri Ghihary Sitepu"
+                            onload="document.getElementById('placeholder-andri').style.display='none'; this.style.display='block';"
+                            onerror="this.style.display='none'; document.getElementById('placeholder-andri').style.display='flex';">
+                    </div>
+                    <h3>Andri Ghihary Sitepu</h3>
+                    <div class="social-links" style="margin-top: 0.5rem;">
+                        <a href="https://instagram.com/andriisitepuu" target="_blank" rel="noopener noreferrer"
+                            class="social-icon" title="Instagram">
+                            <img src="assets/image/ig.jpg" alt="Instagram"
+                                style="width: 20px; height: 20px; object-fit: contain;">
+                        </a>
+                        <a href="https://wa.me/6282369405459" target="_blank" rel="noopener noreferrer"
+                            class="social-icon" title="WhatsApp">
+                            <img src="assets/image/wa.jpg" alt="WhatsApp"
+                                style="width: 20px; height: 20px; object-fit: contain;">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. Maulana Ibrahim Dalimunthe -->
+                <div class="developer-card">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" id="placeholder-maulana">MI</div>
+                        <img src="assets/image/maul.jpeg" alt="Maulana Ibrahim Dalimunthe"
+                            onload="document.getElementById('placeholder-maulana').style.display='none'; this.style.display='block';"
+                            onerror="this.style.display='none'; document.getElementById('placeholder-maulana').style.display='flex';">
+                    </div>
+                    <h3>Maulana Ibrahim Dalimunthe</h3>
+                    <div class="social-links" style="margin-top: 0.5rem;">
+                        <a href="https://instagram.com/brahim.dlt" target="_blank" rel="noopener noreferrer"
+                            class="social-icon" title="Instagram">
+                            <img src="assets/image/ig.jpg" alt="Instagram"
+                                style="width: 20px; height: 20px; object-fit: contain;">
+                        </a>
+                        <a href="https://wa.me/6282363206328" target="_blank" rel="noopener noreferrer"
+                            class="social-icon" title="WhatsApp">
+                            <img src="assets/image/wa.jpg" alt="WhatsApp"
+                                style="width: 20px; height: 20px; object-fit: contain;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Kelompok 7 - TYRO WEB.</p>
+    </footer>
+
+    <script src="scripts/auth-nav.js"></script>
+</body>
+
+</html>

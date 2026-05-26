@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - TYRO WEB</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/auth-nav.css">
+  <script>
+    (async function proteksi() {
+      try {
+        const res = await fetch('/api/auth/me');
+        const data = await res.json();
+        if (!data.logged_in) window.location.href = 'login.html';
+      } catch(e) { window.location.href = 'login.html'; }
+    })();
+  </script>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">TYRO WEB</a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="playground.html">Playground</a></li>
+        <li><a href="developer.html">Developer</a></li>
+        <li id="navAuthItem"><a href="login.html" class="btn-nav-login">Masuk</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="layout-with-sidebar">
+    <aside class="sidebar">
+      <div class="sidebar-label">Menu Belajar</div>
+      <a href="html.html" class="sidebar-link">HTML</a>
+      <a href="css.html" class="sidebar-link">CSS</a>
+      <a href="javascript.html" class="sidebar-link">JavaScript</a>
+      <a href="quiz.html" class="sidebar-link">Quiz</a>
+      <a href="dashboard.html" class="sidebar-link active">Dashboard</a>
+    </aside>
+
+    <main class="container page-content">
+
+      <!-- Info User -->
+      <div class="content-box" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div id="avatarBesar" style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; justify-content: center;"></div>
+            <div>
+              <div id="dashUsername" style="font-weight: 700; font-size: 1.2rem; color: #1e3a8a;"></div>
+              <div id="dashEmail" style="font-size: 0.85rem; color: #6b7280;"></div>
+            </div>
+          </div>
+          <button onclick="logoutUser()" class="btn" style="background: #ef4444; font-size: 0.85rem; padding: 0.5rem 1.25rem;">Keluar</button>
+        </div>
+      </div>
+
+      <!-- Statistik Skor -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+        <div class="content-box" style="text-align: center; padding: 1.25rem; border-top: 4px solid #e34f26;">
+          <div style="font-size: 2rem; font-weight: 800; color: #e34f26;" id="skorHTML">-</div>
+          <div style="font-size: 0.85rem; color: #6b7280; margin-top: 4px;">Skor HTML</div>
+        </div>
+        <div class="content-box" style="text-align: center; padding: 1.25rem; border-top: 4px solid #264de4;">
+          <div style="font-size: 2rem; font-weight: 800; color: #264de4;" id="skorCSS">-</div>
+          <div style="font-size: 0.85rem; color: #6b7280; margin-top: 4px;">Skor CSS</div>
+        </div>
+        <div class="content-box" style="text-align: center; padding: 1.25rem; border-top: 4px solid #d97706;">
+          <div style="font-size: 2rem; font-weight: 800; color: #d97706;" id="skorJS">-</div>
+          <div style="font-size: 0.85rem; color: #6b7280; margin-top: 4px;">Skor JavaScript</div>
+        </div>
+        <div class="content-box" style="text-align: center; padding: 1.25rem; border-top: 4px solid #10b981;">
+          <div style="font-size: 2rem; font-weight: 800; color: #10b981;" id="totalQuiz">0</div>
+          <div style="font-size: 0.85rem; color: #6b7280; margin-top: 4px;">Total Quiz</div>
+        </div>
+      </div>
+
+      <!-- Leaderboard -->
+      <div class="content-box" style="margin-bottom: 1.5rem;">
+        <h2 class="section-title" style="margin-bottom: 1rem;">🏆 Leaderboard</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+
+          <div>
+            <div style="font-weight: 700; color: #e34f26; margin-bottom: 0.5rem;">📄 HTML</div>
+            <div id="lbHTML"><div style="color: #9ca3af; font-size: 0.85rem;">Memuat...</div></div>
+          </div>
+
+          <div>
+            <div style="font-weight: 700; color: #264de4; margin-bottom: 0.5rem;">🎨 CSS</div>
+            <div id="lbCSS"><div style="color: #9ca3af; font-size: 0.85rem;">Memuat...</div></div>
+          </div>
+
+          <div>
+            <div style="font-weight: 700; color: #d97706; margin-bottom: 0.5rem;">⚡ JavaScript</div>
+            <div id="lbJS"><div style="color: #9ca3af; font-size: 0.85rem;">Memuat...</div></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mulai Belajar -->
+      <div class="content-box">
+        <h2 class="section-title" style="margin-bottom: 1rem;">📚 Mulai Belajar</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <a href="html.html" class="card html" style="text-decoration: none;">
+            <h3>HTML</h3>
+            <p>Struktur dasar halaman web.</p>
+          </a>
+          <a href="css.html" class="card css" style="text-decoration: none;">
+            <h3>CSS</h3>
+            <p>Tampilan dan layout halaman.</p>
+          </a>
+          <a href="javascript.html" class="card js" style="text-decoration: none;">
+            <h3>JavaScript</h3>
+            <p>Logika dan interaktivitas.</p>
+          </a>
+          <a href="quiz.html" class="card" style="text-decoration: none; border-top-color: #10b981;">
+            <h3 style="color: #10b981;">Quiz</h3>
+            <p>Uji pemahamanmu sekarang.</p>
+          </a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Kelompok 7 - TYRO WEB.</p>
+  </footer>
+
+  <script src="scripts/auth-nav.js"></script>
+  <script>
+    async function initDashboard() {
+      try {
+        // Load user info
+        const resMe = await fetch('/api/auth/me');
+        const dataMe = await resMe.json();
+        if (!dataMe.logged_in) { window.location.href = 'login.html'; return; }
+
+        const u = dataMe.user;
+        document.getElementById('dashUsername').textContent = u.username;
+        document.getElementById('dashEmail').textContent = u.email;
+        document.getElementById('avatarBesar').textContent = u.username.charAt(0).toUpperCase();
+
+        // Load riwayat quiz
+        const resHistory = await fetch('/api/quiz/history');
+        const dataHistory = await resHistory.json();
+        if (dataHistory.success) {
+          const history = dataHistory.history;
+          document.getElementById('totalQuiz').textContent = history.length;
+
+          const skorPerKat = {};
+          history.forEach(h => {
+            if (!skorPerKat[h.category] || h.score > skorPerKat[h.category]) {
+              skorPerKat[h.category] = h.score;
+            }
+          });
+
+          document.getElementById('skorHTML').textContent = skorPerKat['html'] !== undefined ? skorPerKat['html'] + '/10' : '-';
+          document.getElementById('skorCSS').textContent = skorPerKat['css'] !== undefined ? skorPerKat['css'] + '/10' : '-';
+          document.getElementById('skorJS').textContent = skorPerKat['javascript'] !== undefined ? skorPerKat['javascript'] + '/10' : '-';
+        }
+
+        // Load leaderboard
+        const resLb = await fetch('/api/leaderboard/all');
+        const dataLb = await resLb.json();
+        if (dataLb.success) {
+          renderLeaderboard('lbHTML', dataLb.leaderboard.html || []);
+          renderLeaderboard('lbCSS', dataLb.leaderboard.css || []);
+          renderLeaderboard('lbJS', dataLb.leaderboard.javascript || []);
+        }
+
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function renderLeaderboard(elId, entries) {
+      const el = document.getElementById(elId);
+      if (entries.length === 0) {
+        el.innerHTML = '<div style="color: #9ca3af; font-size: 0.85rem;">Belum ada data</div>';
+        return;
+      }
+      const medals = ['🥇', '🥈', '🥉', '4.', '5.'];
+      el.innerHTML = entries.map((e, i) => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.875rem;">
+          <span>${medals[i] || (i+1)+'.'} ${e.username}</span>
+          <span style="font-weight: 700; color: #1e3a8a;">${e.score}/${e.total}</span>
+        </div>`).join('');
+    }
+
+    initDashboard();
+  </script>
+</body>
+
+</html>

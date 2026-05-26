@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - TYRO WEB</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/auth-nav.css">
+  <style>
+    /* Styling untuk Kuis Satu per Satu */
+    .question {
+      display: none;
+    }
+
+    .question.active-question {
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .quiz-progress-container {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    #quizProgressBar {
+      width: 5%;
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .quiz-navigation {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .quiz-navigation button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+  <script>
+  (async function proteksi() {
+    try {
+      const res = await fetch('/api/auth/me');
+      const data = await res.json();
+      if (!data.logged_in) window.location.href = 'login.html';
+    } catch(e) { window.location.href = 'login.html'; }
+  })();
+</script>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">TYRO WEB</a>
+      <button class="nav-toggle" aria-label="Buka menu navigasi">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="playground.html">Playground</a></li>
+        <li><a href="developer.html">Developer</a></li>
+        <li id="navAuthItem"><a href="login.html" class="btn-nav-login">Masuk</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="layout-with-sidebar">
+  <aside class="sidebar">
+    <div class="sidebar-label">Menu Belajar</div>
+    <a href="html.html" class="sidebar-link">HTML</a>
+    <a href="css.html" class="sidebar-link">CSS</a>
+    <a href="javascript.html" class="sidebar-link">JavaScript</a>
+    <a href="quiz.html" class="sidebar-link active">Quiz</a>
+    <a href="dashboard.html" class="sidebar-link">Dashboard</a>
+  </aside>
+  <main class="container page-content">
+    <section class="content-box">
+      <h2 class="section-title">Uji Pengetahuan Anda</h2>
+      <p class="section-desc">Kerjakan kuis ini untuk menguji pemahaman Anda tentang materi dasar pemrograman web (HTML,
+        CSS, dan JavaScript).</p>
+
+<div id="kategoriSection">
+  <h3 style="margin-bottom: 1rem; color: var(--text-heading);">Pilih Kategori Quiz</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+    <button type="button" onclick="mulaiQuiz('html')" class="btn" style="padding: 1.5rem; font-size: 1rem; background: #e34f26; border-radius: 12px; flex-direction: column; gap: 8px; height: auto;">
+    📄<br>HTML
+    </button>
+    <button type="button" onclick="mulaiQuiz('css')" class="btn" style="padding: 1.5rem; font-size: 1rem; background: #264de4; border-radius: 12px; flex-direction: column; gap: 8px; height: auto;">
+    🎨<br>CSS
+    </button>
+    <button type="button" onclick="mulaiQuiz('javascript')" class="btn" style="padding: 1.5rem; font-size: 1rem; background: #d97706; border-radius: 12px; flex-direction: column; gap: 8px; height: auto;">
+    ⚡<br>JavaScript
+    </button>
+  </div>
+</div>
+
+<!-- Area Quiz -->
+<form id="quizForm" class="quiz-form" style="display: none;">
+  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+    <button type="button" onclick="kembaliKeKategori()" style="background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-muted);">← Kembali</button>
+    <h3 id="judulKategori" style="margin: 0; color: var(--text-heading);"></h3>
+  </div>
+
+  <div class="quiz-progress-container">
+    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: bold; color: var(--text-heading);">
+      <span id="quizProgressText">Soal 1 dari 10</span>
+      <span id="quizPercentText">10% Selesai</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div id="quizProgressBar"></div>
+    </div>
+  </div>
+
+  <div id="soalContainer"></div>
+
+  <div class="quiz-navigation">
+    <button type="button" id="prevBtn" class="btn" style="background-color: #64748b;">Sebelumnya</button>
+    <button type="button" id="nextBtn" class="btn">Berikutnya</button>
+    <button type="button" id="submitBtn" class="btn" style="display: none;" onclick="submitQuiz()">Cek Skor</button>
+  </div>
+</form>
+    </section>
+  </main>
+  </div>
+
+  <div class="modal-overlay" id="customModal">
+    <div class="modal-content">
+      <h3 style="margin-bottom: 1rem;">Hasil Kuis</h3>
+      <p id="modalMessage" style="margin-bottom: 1.5rem;">Pesan hasil kuis di sini</p>
+      <button class="btn" onclick="tutupModal()">Tutup</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Kelompok 7 - TYRO WEB.</p>
+  </footer>
+
+  <script src="scripts/script.js"></script>
+  <script src="scripts/auth-nav.js"></script>
+  <script>
+const soalBank = {
+  html: [
+    { soal: "Tag apa yang digunakan untuk membuat judul terbesar?", opsi: ["h6", "h1", "h3"], jawaban: "b" },
+    { soal: "Atribut apa yang digunakan untuk menentukan alamat tujuan link?", opsi: ["src", "href", "target"], jawaban: "b" },
+    { soal: "Tag apa untuk menampilkan gambar?", opsi: ["img", "src", "pic"], jawaban: "a" },
+    { soal: "Tag apa untuk membuat daftar berurutan?", opsi: ["ul", "ol", "li"], jawaban: "b" },
+    { soal: "Atribut alt pada tag img berfungsi untuk?", opsi: ["Ukuran gambar", "Teks alternatif", "Link gambar"], jawaban: "b" },
+    { soal: "Tag yang mendefinisikan baris tabel adalah?", opsi: ["td", "tr", "th"], jawaban: "b" },
+    { soal: "Tag untuk input teks panjang adalah?", opsi: ["input", "textarea", "select"], jawaban: "b" },
+    { soal: "Apa kepanjangan HTML?", opsi: ["Hyper Text Markup Language", "High Text Machine Language", "Hyper Tool Multi Language"], jawaban: "a" },
+    { soal: "Tag untuk menebalkan teks adalah?", opsi: ["em", "strong", "mark"], jawaban: "b" },
+    { soal: "Tag semantik untuk navigasi adalah?", opsi: ["div", "nav", "section"], jawaban: "b" },
+  ],
+  css: [
+    { soal: "Selector class diawali dengan simbol?", opsi: ["#", ".", "*"], jawaban: "b" },
+    { soal: "Properti untuk mengubah warna teks adalah?", opsi: ["background", "color", "font"], jawaban: "b" },
+    { soal: "Lapisan paling luar Box Model adalah?", opsi: ["padding", "border", "margin"], jawaban: "c" },
+    { soal: "Nilai display untuk menyembunyikan elemen?", opsi: ["block", "none", "inline"], jawaban: "b" },
+    { soal: "Properti untuk jarak antar baris teks?", opsi: ["line-height", "font-size", "font-weight"], jawaban: "a" },
+    { soal: "Untuk layout satu dimensi digunakan?", opsi: ["grid", "flex", "block"], jawaban: "b" },
+    { soal: "justify-content digunakan untuk?", opsi: ["Vertikal", "Horizontal", "Diagonal"], jawaban: "b" },
+    { soal: "Position yang menempel saat scroll adalah?", opsi: ["fixed", "sticky", "absolute"], jawaban: "b" },
+    { soal: "Format warna #4f46e5 adalah format?", opsi: ["RGB", "HEX", "HSL"], jawaban: "b" },
+    { soal: "@media digunakan untuk?", opsi: ["Memutar video", "Layout responsif", "Font tebal"], jawaban: "b" },
+  ],
+  javascript: [
+    { soal: "Kata kunci untuk variabel yang tidak bisa diubah?", opsi: ["let", "var", "const"], jawaban: "c" },
+    { soal: "Fungsi untuk menampilkan popup adalah?", opsi: ["console.log", "alert", "prompt"], jawaban: "b" },
+    { soal: "Tipe data true/false disebut?", opsi: ["String", "Number", "Boolean"], jawaban: "c" },
+    { soal: "Operator identitas ketat adalah?", opsi: ["==", "===", "="], jawaban: "b" },
+    { soal: "Perulangan dengan jumlah pasti menggunakan?", opsi: ["while", "for", "if"], jawaban: "b" },
+    { soal: "Untuk mengakses elemen by ID digunakan?", opsi: ["querySelector", "getElementById", "getClass"], jawaban: "b" },
+    { soal: "Metode untuk menambah item ke array?", opsi: ["push", "pop", "add"], jawaban: "a" },
+    { soal: "Event saat elemen diklik adalah?", opsi: ["hover", "click", "change"], jawaban: "b" },
+    { soal: "Kata kunci fungsi adalah?", opsi: ["func", "function", "def"], jawaban: "b" },
+    { soal: "DOM singkatan dari?", opsi: ["Document Object Model", "Data Object Method", "Dynamic Object Map"], jawaban: "a" },
+  ]
+};
+
+const judulMap = { html: "📄 Quiz HTML", css: "🎨 Quiz CSS", javascript: "⚡ Quiz JavaScript" };
+let kategoriAktif = "";
+let currentIndex = 0;
+let jawaban = {};
+
+function mulaiQuiz(kategori) {
+  kategoriAktif = kategori;
+  currentIndex = 0;
+  jawaban = {};
+  document.getElementById('kategoriSection').style.display = 'none';
+  document.getElementById('quizForm').style.display = 'block';
+  document.getElementById('judulKategori').textContent = judulMap[kategori];
+  tampilkanSoal(0);
+}
+
+function kembaliKeKategori() {
+  document.getElementById('kategoriSection').style.display = 'block';
+  document.getElementById('quizForm').style.display = 'none';
+}
+
+function tampilkanSoal(index) {
+  const soalList = soalBank[kategoriAktif];
+  const total = soalList.length;
+  const soal = soalList[index];
+
+  const container = document.getElementById('soalContainer');
+  container.innerHTML = `
+    <div class="content-box" style="animation: fadeIn 0.3s ease;">
+      <h4 style="margin-bottom: 1rem; color: var(--text-heading);">${index + 1}. ${soal.soal}</h4>
+      <div class="options">
+        ${soal.opsi.map((o, i) => {
+          const val = ['a','b','c'][i];
+          const checked = jawaban[index] === val ? 'checked' : '';
+          return `<label style="cursor:pointer;">
+            <input type="radio" name="soal${index}" value="${val}" ${checked} onchange="simpanJawaban(${index}, '${val}')"> ${o}
+          </label>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  const percent = Math.round(((index + 1) / total) * 100);
+  document.getElementById('quizProgressText').textContent = `Soal ${index + 1} dari ${total}`;
+  document.getElementById('quizPercentText').textContent = `${percent}% Selesai`;
+  document.getElementById('quizProgressBar').style.width = percent + '%';
+
+  document.getElementById('prevBtn').style.display = index === 0 ? 'none' : 'block';
+  document.getElementById('nextBtn').style.display = index === total - 1 ? 'none' : 'block';
+  document.getElementById('submitBtn').style.display = index === total - 1 ? 'block' : 'none';
+
+  updateNextBtn(index);
+}
+
+function simpanJawaban(index, val) {
+  jawaban[index] = val;
+  updateNextBtn(index);
+}
+
+function updateNextBtn(index) {
+  const soalList = soalBank[kategoriAktif];
+  const sudahJawab = jawaban[index] !== undefined;
+  if (index === soalList.length - 1) {
+    document.getElementById('submitBtn').disabled = !sudahJawab;
+  } else {
+    document.getElementById('nextBtn').disabled = !sudahJawab;
+  }
+}
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (currentIndex > 0) { currentIndex--; tampilkanSoal(currentIndex); }
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  const total = soalBank[kategoriAktif].length;
+  if (currentIndex < total - 1) { currentIndex++; tampilkanSoal(currentIndex); }
+});
+
+function submitQuiz() {
+  const soalList = soalBank[kategoriAktif];
+  const total = soalList.length;
+  const belumJawab = [];
+
+  for (let i = 0; i < total; i++) {
+    if (jawaban[i] === undefined) belumJawab.push(i + 1);
+  }
+
+  if (belumJawab.length > 0) {
+    tampilkanModal(`Belum menjawab soal nomor: ${belumJawab.join(', ')}`);
+    return;
+  }
+
+  let score = 0;
+  soalList.forEach((soal, i) => {
+    if (jawaban[i] === soal.jawaban) score++;
+  });
+
+  const percent = Math.round((score / total) * 100);
+  tampilkanModal(`Kuis Selesai!<br><br>Kategori: <b>${judulMap[kategoriAktif]}</b><br>Skor: <b>${score} / ${total}</b> (${percent}%)<br><br>Terus semangat belajar!`);
+
+  fetch('/api/quiz/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ category: kategoriAktif, score, total })
+  }).catch(() => {});
+}
+
+function tampilkanModal(pesan) {
+  document.getElementById('modalMessage').innerHTML = pesan;
+  document.getElementById('customModal').classList.add('active');
+}
+
+function tutupModal() {
+  document.getElementById('customModal').classList.remove('active');
+  kembaliKeKategori();
+}
+</script>
+</body>
+
+</html>
